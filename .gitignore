@@ -12,6 +12,12 @@ bazel-testlogs
 *.so
 *.dylib
 
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
 # Generated
 compile_commands.json
 .cache/
