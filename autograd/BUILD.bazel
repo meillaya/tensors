@@ -6,6 +6,7 @@ cc_library(
         "AccumulateGrad.cpp",
         "AddBackward.cpp",
         "AutogradMeta.cpp",
+        "Engine.cpp",
         "InputBuffer.cpp",
         "SavedTensor.cpp",
         "TensorAutograd.cpp",
@@ -14,6 +15,7 @@ cc_library(
         "AccumulateGrad.hpp",
         "AddBackward.hpp",
         "AutogradMeta.hpp",
+        "Engine.hpp",
         "InputBuffer.hpp",
         "IntrusivePtr.hpp",
         "Node.hpp",
@@ -33,6 +35,13 @@ cc_test(
 cc_test(
     name = "autograd_meta_test",
     srcs = ["autograd_meta_test.cpp"],
+    deps = [":autograd_core", "//third_party/doctest:doctest"],
+    tags = ["cpu"],
+)
+
+cc_test(
+    name = "engine_test",
+    srcs = ["engine_test.cpp"],
     deps = [":autograd_core", "//third_party/doctest:doctest"],
     tags = ["cpu"],
 )

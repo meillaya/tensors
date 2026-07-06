@@ -14,6 +14,7 @@ namespace tensorforge {
 // extract the accumulated gradients and passes them to Node::apply().
 class InputBuffer {
 public:
+    InputBuffer() = default;
     explicit InputBuffer(size_t num_outputs);
 
     void add(size_t pos, Tensor grad);

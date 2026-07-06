@@ -2,6 +2,9 @@
 
 #include "autograd/AccumulateGrad.hpp"
 #include "autograd/AutogradMeta.hpp"
+#include "autograd/Engine.hpp"
+
+#include <stdexcept>
 
 namespace tensorforge {
 
@@ -36,7 +39,18 @@ Tensor Tensor::grad() const {
 }
 
 void Tensor::backward() {
-    // Implemented in T32 (Engine).
+    if (!autograd_meta_ || !autograd_meta_->grad_fn_) {
+        throw std::runtime_error("backward() called on tensor without grad_fn");
+    }
+    Tensor grad = Tensor::empty(shape(), dtype(), device());
+    if (dtype() == Dtype::Float32) {
+        float* ptr = static_cast<float*>(grad.data());
+        for (int64_t i = 0; i < grad.numel(); ++i) {
+            ptr[i] = 1.0f;
+        }
+    }
+    Engine engine;
+    engine.execute(autograd_meta_->grad_fn_, grad, false);
 }
 
 } // namespace tensorforge
