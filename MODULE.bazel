@@ -29,6 +29,20 @@ bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "rules_cc", version = "0.2.17")
 
 # -------------------------------------------------------------------
+# hedron_compile_commands — dev-only helper that generates
+# compile_commands.json for clangd/IDE integration. Pinned to the latest
+# main commit; the version in bazel_dep is only a placeholder because the
+# project does not publish to the Bazel Central Registry.
+# -------------------------------------------------------------------
+
+bazel_dep(name = "hedron_compile_commands", version = "0.0.5", dev_dependency = True)
+git_override(
+    module_name = "hedron_compile_commands",
+    commit = "abb61a688167623088f8768cc9264798df6a9d10",
+    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
+)
+
+# -------------------------------------------------------------------
 # Hermetic CUDA toolchain — redistributable JSON pulls the manifest for
 # 12.6.3 across all supported platforms; the toolkit tag then assembles
 # a local CUDA repo from those components.

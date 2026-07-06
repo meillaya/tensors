@@ -1,5 +1,11 @@
 # TensorForge — Bazel configuration
 # See https://bazel.build/docs/bazelrc for syntax.
+#
+# Sections:
+#   1. Language defaults (C++20) and compiler environment.
+#   2. CUDA / NVCC tuning (spawn strategy, sm_80/sm_90 archs).
+#   3. Test output defaults (errors + short summary).
+#   4. CPU-only build config (TENSORFORGE_CPU_ONLY preprocessor define).
 
 # C++20 everywhere. CUDA 12.x's nvcc accepts only --std=c++20; do NOT
 # raise this to C++23 (mdspan, expected, deducing-this are unavailable).
@@ -36,5 +42,19 @@ build --action_env=CC=gcc --action_env=CXX=g++
 # Show test output on failure to speed up CI debugging later.
 test --test_output=errors
 
+# Default test output and summary for all build/test invocations.
+build --test_output=errors
+build --test_summary=short
+
 # Be quiet — Bazel info spam is noisy in agent logs.
 build --announce_rc
+
+# -------------------------------------------------------------------
+# CPU-only config — sets a preprocessor flag so CPU-only code paths can
+# be selected. Note: this does NOT disable rules_cuda; targets that
+# depend on cuda_library (e.g. //hello:hello) still require a CUDA build.
+# rules_cuda is enabled/disabled via --@rules_cuda//cuda:enable, not via
+# a crosstool_top override, so no build:cuda --crosstool_top is added.
+# -------------------------------------------------------------------
+build:cpu --cxxopt=-DTENSORFORGE_CPU_ONLY
+build:cpu --host_cxxopt=-DTENSORFORGE_CPU_ONLY
