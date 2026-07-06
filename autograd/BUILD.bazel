@@ -3,11 +3,18 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 cc_library(
     name = "autograd_core",
     srcs = [
+        "AccumulateGrad.cpp",
         "AddBackward.cpp",
+        "AutogradMeta.cpp",
+        "InputBuffer.cpp",
         "SavedTensor.cpp",
+        "TensorAutograd.cpp",
     ],
     hdrs = [
+        "AccumulateGrad.hpp",
         "AddBackward.hpp",
+        "AutogradMeta.hpp",
+        "InputBuffer.hpp",
         "IntrusivePtr.hpp",
         "Node.hpp",
         "SavedTensor.hpp",
@@ -19,6 +26,13 @@ cc_library(
 cc_test(
     name = "node_test",
     srcs = ["node_test.cpp"],
+    deps = [":autograd_core", "//third_party/doctest:doctest"],
+    tags = ["cpu"],
+)
+
+cc_test(
+    name = "autograd_meta_test",
+    srcs = ["autograd_meta_test.cpp"],
     deps = [":autograd_core", "//third_party/doctest:doctest"],
     tags = ["cpu"],
 )

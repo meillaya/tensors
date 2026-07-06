@@ -59,6 +59,14 @@ public:
         return 0;
     }
 
+    [[nodiscard]] std::shared_ptr<AutogradMeta>& autograd_meta() noexcept;
+    [[nodiscard]] const std::shared_ptr<AutogradMeta>& autograd_meta() const noexcept;
+
+    void requires_grad(bool req);
+    [[nodiscard]] bool requires_grad() const noexcept;
+    [[nodiscard]] Tensor grad() const;
+    void backward();
+
 private:
     Storage storage_;
     size_t storage_offset_ = 0;
