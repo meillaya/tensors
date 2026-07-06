@@ -1,0 +1,35 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "tensor_types",
+    hdrs = ["Shape.hpp", "Stride.hpp", "Dtype.hpp", "Device.hpp"],
+    visibility = ["//visibility:public"],
+)
+
+cc_test(
+    name = "shape_test",
+    srcs = ["shape_test.cpp"],
+    deps = [":tensor_types", "//third_party/doctest:doctest"],
+    tags = ["cpu"],
+)
+
+cc_test(
+    name = "stride_test",
+    srcs = ["stride_test.cpp"],
+    deps = [":tensor_types", "//third_party/doctest:doctest"],
+    tags = ["cpu"],
+)
+
+cc_test(
+    name = "dtype_test",
+    srcs = ["dtype_test.cpp"],
+    deps = [":tensor_types", "//third_party/doctest:doctest"],
+    tags = ["cpu"],
+)
+
+cc_test(
+    name = "device_test",
+    srcs = ["device_test.cpp"],
+    deps = [":tensor_types", "//third_party/doctest:doctest"],
+    tags = ["cpu"],
+)
