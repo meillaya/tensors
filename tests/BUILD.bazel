@@ -1,0 +1,15 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "cpu_smoke_test",
+    srcs = ["cpu_smoke_test.cpp"],
+    deps = ["//third_party/doctest:doctest"],
+    tags = ["cpu"],
+)
+
+cc_test(
+    name = "gpu_smoke_test",
+    srcs = ["gpu_smoke_test.cpp"],
+    deps = ["//third_party/doctest:doctest"],
+    tags = ["gpu"],  # Skipped at runtime; safe if accidentally run on CPU
+)
