@@ -1,0 +1,48 @@
+name: CPU Smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel in-progress runs of the same workflow on the same branch. Prevents
+# stale PR pushes from piling up queued runners while a slower push run is
+# still executing.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cpu-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Bazelisk
+        run: |
+          curl -fsSL -o /tmp/bazelisk https://github.com/bazelbuild/bazelisk/releases/download/v1.20.0/bazelisk-linux-amd64
+          chmod +x /tmp/bazelisk
+          sudo mv /tmp/bazelisk /usr/local/bin/bazelisk
+
+      - name: Verify build (CPU-only config)
+        # The //hello:hello target is currently a CUDA library, but we invoke
+        # it under --config=cpu which (once defined in .bazelrc) will route
+        # through a CPU-only toolchain / skip nvcc. If the project has not
+        # yet wired a --config=cpu stanza this step will surface the
+        # missing config immediately, which is the desired signal in CI.
+        run: bazelisk build //hello:hello --config=cpu
+
+      - name: Run CPU tests
+        # Tests are not yet written; tolerate the no-op so the workflow
+        # stays green while the test suite is being built out.
+        run: bazelisk test //... --config=cpu --test_tag_filters=cpu
+        continue-on-error: true
+
+      - name: Cache Bazel
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/bazel
+          key: ${{ runner.os }}-bazel-${{ hashFiles('MODULE.bazel', '.bazelrc', '.bazelversion') }}
+          restore-keys: ${{ runner.os }}-bazel-

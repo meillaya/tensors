@@ -1,0 +1,128 @@
+name: GPU Tests (PrimeIntellect)
+
+on:
+  # Manual trigger from the Actions tab — useful when iterating on a
+  # GPU-specific change without waiting for the nightly cron.
+  workflow_dispatch:
+  # 06:00 UTC daily — covers most timezones during business hours so a
+  # breakage shows up in the work day, not at 3am.
+  schedule:
+    - cron: '0 6 * * *'
+
+# Cancel in-progress nightly runs when a newer commit lands. Manual
+# triggers are grouped by branch/ref to avoid two simultaneous pods
+# burning money on the same code.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gpu-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      # The PRIME_API_KEY is provisioned via the repo's GitHub Actions
+      # secret store. Never log or echo it.
+      PRIME_API_KEY: ${{ secrets.PRIME_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install prime CLI
+        run: |
+          curl -fsSL https://primeintellect.ai/install.sh | bash
+          prime --version
+
+      - name: Provision H100 pod
+        id: provision
+        # Pick the cheapest *Available* H100 offer. If none, fall back to
+        # the cheapest *Available* A100. Abort if neither is in stock so a
+        # stock-out does not silently pass CI.
+        run: |
+          AVAIL=$(prime availability list --gpu-type H100_80GB --output json --plain | python3 -c "
+          import json, sys
+          data = json.load(sys.stdin)
+          offers = [o for o in data.get('gpu_resources', []) if o.get('stock_status') == 'Available']
+          offers.sort(key=lambda o: o.get('price_value', 1e9))
+          print(offers[0]['id'] if offers else '')
+          ")
+          if [ -z "$AVAIL" ]; then
+            echo "::notice::No H100 pods available; falling back to A100"
+            AVAIL=$(prime availability list --gpu-type A100_80GB --output json --plain | python3 -c "
+            import json, sys
+            data = json.load(sys.stdin)
+            offers = [o for o in data.get('gpu_resources', []) if o.get('stock_status') == 'Available']
+            offers.sort(key=lambda o: o.get('price_value', 1e9))
+            print(offers[0]['id'] if offers else '')
+            ")
+          fi
+          if [ -z "$AVAIL" ]; then
+            echo "::error::No GPU pods available (H100 nor A100)"; exit 1
+          fi
+          POD=$(prime pods create --id "$AVAIL" --name "tf-ci-${{ github.run_id }}" --yes --plain | grep -oE '[a-f0-9]{32}' | head -1)
+          if [ -z "$POD" ]; then
+            echo "::error::Failed to extract pod id from prime pods create output"; exit 1
+          fi
+          echo "POD_ID=$POD" >> "$GITHUB_OUTPUT"
+          echo "Provisioned pod: $POD"
+
+      - name: Wait for pod ready
+        # Prime pods typically take 60-120s to reach ACTIVE. Poll for up
+        # to 5 minutes; abort if the pod lands in STOPPED (quota/billing).
+        run: |
+          POD_ID="${{ steps.provision.outputs.POD_ID }}"
+          for i in $(seq 1 30); do
+            STATUS=$(prime pods status "$POD_ID" --plain | grep -oE 'ACTIVE|STARTING|STOPPED' | head -1)
+            echo "[poll $i] pod status: $STATUS"
+            if [ "$STATUS" = "ACTIVE" ]; then echo "Pod $POD_ID is ACTIVE"; exit 0; fi
+            if [ "$STATUS" = "STOPPED" ]; then echo "::error::Pod failed to reach ACTIVE"; exit 1; fi
+            sleep 10
+          done
+          echo "::error::Pod did not reach ACTIVE within 5 minutes"; exit 1
+
+      - name: Setup pod (install CUDA toolkit, bazelisk)
+        # ubuntu_22_cuda_12 ships the NVIDIA driver + CUDA *repo* only;
+        # the toolkit itself must be apt-installed. /data is read-only as
+        # ubuntu, so mkdir + chown via passwordless sudo.
+        run: |
+          POD_IP=$(prime pods status "${{ steps.provision.outputs.POD_ID }}" --plain | grep "IP" | awk '{print $2}')
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@"$POD_IP" << 'PODEOF'
+            set -e
+            sudo DEBIAN_FRONTEND=noninteractive apt-get update -qq
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y cuda-toolkit-12-2 g++-12
+            curl -fsSL -o /tmp/bazelisk https://github.com/bazelbuild/bazelisk/releases/download/v1.20.0/bazelisk-linux-amd64
+            chmod +x /tmp/bazelisk && sudo mv /tmp/bazelisk /usr/local/bin/bazelisk
+            sudo -n mkdir -p /data/tensorforge && sudo -n chown -R ubuntu:ubuntu /data
+          PODEOF
+
+      - name: Sync code and run GPU tests
+        # rsync excludes: .git (rebuilt on pod), bazel-* (rebuilt),
+        # .omo + private/public key files (never leave the runner).
+        run: |
+          POD_IP=$(prime pods status "${{ steps.provision.outputs.POD_ID }}" --plain | grep "IP" | awk '{print $2}')
+          rsync -a --exclude='.git' --exclude='bazel-*' --exclude='.omo' --exclude='public_key.pem' --exclude='private_key.pem' --exclude='.env' ./ ubuntu@"$POD_IP":/data/tensorforge/
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@"$POD_IP" << 'PODEOF'
+            set -e
+            export PATH=/usr/local/cuda-12.2/bin:/usr/local/bin:$PATH
+            export LD_LIBRARY_PATH=/usr/local/cuda-12.2/lib64:$LD_LIBRARY_PATH
+            cd /data/tensorforge
+            bazelisk test //... --config=sm80_sm90 --test_tag_filters=gpu
+          PODEOF
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gpu-test-results
+          path: |
+            bazel-testlogs/
+            bazel-bin/
+
+      - name: Terminate pod
+        # `if: always()` is critical: an orphaned pod continues to bill
+        # until manually terminated. We tolerate non-zero exit in case
+        # the pod already shut down on its own (e.g. provider-side
+        # eviction), so this step never fails the job itself.
+        if: always()
+        run: |
+          POD_ID="${{ steps.provision.outputs.POD_ID }}"
+          prime pods terminate "$POD_ID" || echo "::warning::pod $POD_ID termination failed (may already be gone)"
