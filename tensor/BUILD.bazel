@@ -48,3 +48,18 @@ cc_test(
     deps = [":storage", "//third_party/doctest:doctest"],
     tags = ["cpu"],
 )
+
+cc_library(
+    name = "tensor_core",
+    srcs = ["Tensor.cpp", "Storage.cpp", "CPUStorageAllocator.cpp"],
+    hdrs = ["Tensor.hpp", "Storage.hpp", "CPUStorageAllocator.hpp", "Shape.hpp", "Stride.hpp", "Dtype.hpp", "Device.hpp"],
+    visibility = ["//visibility:public"],
+    deps = [":tensor_types", ":storage"],
+)
+
+cc_test(
+    name = "tensor_test",
+    srcs = ["tensor_test.cpp"],
+    deps = [":tensor_core", "//third_party/doctest:doctest"],
+    tags = ["cpu"],
+)
