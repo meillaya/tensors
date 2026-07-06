@@ -14,3 +14,18 @@ cc_test(
     deps = [":mnist", "//tensor:tensor_core", "//third_party/doctest:doctest"],
     tags = ["cpu"],
 )
+
+cc_library(
+    name = "cifar",
+    srcs = ["CifarLoader.cpp"],
+    hdrs = ["CifarLoader.hpp"],
+    visibility = ["//visibility:public"],
+    deps = ["//tensor:tensor_core"],
+)
+
+cc_test(
+    name = "cifar_loader_test",
+    srcs = ["cifar_loader_test.cpp"],
+    deps = [":cifar", "//tensor:tensor_core", "//third_party/doctest:doctest"],
+    tags = ["cpu"],
+)
