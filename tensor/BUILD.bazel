@@ -63,3 +63,18 @@ cc_test(
     deps = [":tensor_core", "//third_party/doctest:doctest"],
     tags = ["cpu"],
 )
+
+cc_library(
+    name = "slicing",
+    srcs = ["slicing.cpp"],
+    hdrs = ["slicing.hpp"],
+    visibility = ["//visibility:public"],
+    deps = [":tensor_core", "//third_party/mdspan:mdspan"],
+)
+
+cc_test(
+    name = "slicing_test",
+    srcs = ["slicing_test.cpp"],
+    deps = [":slicing", "//third_party/doctest:doctest"],
+    tags = ["cpu"],
+)
