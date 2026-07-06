@@ -67,6 +67,13 @@ public:
     [[nodiscard]] Tensor grad() const;
     void backward();
 
+    // Elementwise activations — STUBS in v1, returning *this. Real
+    // elementwise + autograd wiring lands in T19. These declarations
+    // exist so nn/Activations.hpp can build before T19 lands.
+    [[nodiscard]] Tensor relu() const;
+    [[nodiscard]] Tensor sigmoid() const;
+    [[nodiscard]] Tensor tanh() const;
+
 private:
     Storage storage_;
     size_t storage_offset_ = 0;

@@ -22,3 +22,26 @@ cc_test(
     ],
     tags = ["cpu"],
 )
+
+cc_library(
+    name = "activations",
+    srcs = ["Activations.cpp"],
+    hdrs = ["Activations.hpp"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":module",
+        "//tensor:tensor_core",
+    ],
+)
+
+cc_test(
+    name = "activations_module_test",
+    srcs = ["activations_module_test.cpp"],
+    deps = [
+        ":activations",
+        ":module",
+        "//tensor:tensor_core",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["cpu"],
+)

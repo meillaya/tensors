@@ -20,4 +20,19 @@ Tensor Tensor::empty(Shape shape, Dtype dtype, Device device) {
     return Tensor(std::move(storage), 0, std::move(shape), std::move(stride));
 }
 
+Tensor Tensor::relu() const {
+    // STUB — see T19.
+    return *this;
+}
+
+Tensor Tensor::sigmoid() const {
+    // STUB — see T19.
+    return *this;
+}
+
+Tensor Tensor::tanh() const {
+    // STUB — see T19.
+    return *this;
+}
+
 } // namespace tensorforge
