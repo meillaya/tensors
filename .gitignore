@@ -1,0 +1,38 @@
+# TensorForge — C++20 / CUDA 12 GPU Tensor + Autograd Runtime
+# (built and developed for H100 sm_90 + Ampere sm_80)
+
+# Build outputs
+bazel-*
+bazel.bazelrc
+bazel-bin
+bazel-out
+bazel-testlogs
+*.o
+*.a
+*.so
+*.dylib
+
+# Generated
+compile_commands.json
+.cache/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets / sensitive — MUST NEVER COMMIT
+private_key.pem
+public_key.pem
+.env
+.env.*
+!.env.example
+
+# Internal / evidence (not for the public repo)
+.omo/
+.run/

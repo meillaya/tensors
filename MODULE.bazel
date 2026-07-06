@@ -1,0 +1,55 @@
+"""TensorForge — Bzlmod module file.
+
+Build system validation (Wave 0.5): pin rules_cuda to the post-v0.3.0 main commit
+that fixes multi-version / multi-arch support (commit 345dd02 or later). Pull
+CUDA 12.6.3 via the official `cuda.redist_json` + `cuda.toolkit` extension so the
+toolchain is hermetic — no environment-dependent CUDA_PATH at build time.
+"""
+
+module(
+    name = "tensorforge",
+    version = "0.1.0",
+)
+
+# -------------------------------------------------------------------
+# rules_cuda — pinned via git_override to commit 345dd02+ (post v0.3.0
+# fixes for multi-version/multi-arch toolchains and the NVCC /tmp PID
+# collision workaround). See .omo/drafts for the rationale.
+# -------------------------------------------------------------------
+
+bazel_dep(name = "rules_cuda", version = "0.3.0")
+git_override(
+    module_name = "rules_cuda",
+    commit = "345dd02d2b64b8a6c138800da3180c9278417ec2",
+    remote = "https://github.com/bazel-contrib/rules_cuda.git",
+)
+
+bazel_dep(name = "bazel_skylib", version = "1.8.2")
+bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "rules_cc", version = "0.2.17")
+
+# -------------------------------------------------------------------
+# Hermetic CUDA toolchain — redistributable JSON pulls the manifest for
+# 12.6.3 across all supported platforms; the toolkit tag then assembles
+# a local CUDA repo from those components.
+# -------------------------------------------------------------------
+
+cuda = use_extension("@rules_cuda//cuda:extensions.bzl", "toolchain")
+
+# In Bzlmod the `platforms` attribute is required on cuda.redist_json because
+# module extensions have no host OS/arch info. linux-x86_64 covers the H100
+# pod; linux-sbsa covers the A100 family for forward-compat. See rules_cuda
+# README: "Multi-version hermetic toolchains (Bzlmod)".
+cuda.redist_json(
+    name = "redist_json",
+    version = "12.6.3",
+    platforms = [
+        "linux-x86_64",
+    ],
+)
+
+cuda.toolkit(
+    name = "cuda",
+)
+
+use_repo(cuda, "cuda")

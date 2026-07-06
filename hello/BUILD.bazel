@@ -1,0 +1,30 @@
+"""TensorForge — hello package: build-system smoke test (Wave 0.5).
+
+Compiles a trivial CUDA kernel + host main into a runnable binary. The
+binary must print 'TensorForge build OK' on stdout when run on a real
+GPU pod. Passing this target proves:
+
+  1. Bazel + Bzlmod + bazelisk resolve the workspace (rules_cuda @ 345dd02)
+  2. cuda.redist_json + cuda.toolkit pull CUDA 12.6.3 hermetically
+  3. nvcc compiles .cu -> .o with sm_80 + sm_90 enabled
+  4. cc_binary links against the CUDA runtime + the cuda_library output
+"""
+
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@rules_cuda//cuda:defs.bzl", "cuda_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cuda_library(
+    name = "hello_lib",
+    srcs = ["hello.cu"],
+    hdrs = ["hello.cuh"],
+    # defaults to @cuda//toolchain:nvcc - sm_80/sm_90 are selected via
+    # the --@rules_cuda//cuda:archs flag in .bazelrc.
+)
+
+cc_binary(
+    name = "hello",
+    srcs = ["main.cc"],
+    deps = [":hello_lib"],
+)

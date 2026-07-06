@@ -1,0 +1,9 @@
+"""TensorForge — root BUILD.bazel.
+
+Defines the workspace entry point; per-package BUILD.bazel files live next to
+their sources (see //hello/BUILD.bazel).
+"""
+
+# Reserved for future top-level helpers (e.g., cc_shared_library, alias
+# shortcuts). Intentionally empty for Wave 0.5 — only the build-system
+# validation target lives in //hello.

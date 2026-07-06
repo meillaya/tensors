@@ -1,0 +1,40 @@
+# TensorForge — Bazel configuration
+# See https://bazel.build/docs/bazelrc for syntax.
+
+# C++20 everywhere. CUDA 12.x's nvcc accepts only --std=c++20; do NOT
+# raise this to C++23 (mdspan, expected, deducing-this are unavailable).
+build --cxxopt=-std=c++20
+build --host_cxxopt=-std=c++20
+build --linkopt=-std=c++20
+
+# NVCC writes intermediate scratch files to a fixed /tmp path that
+# collides when multiple compilations run inside sandbox workers. The
+# documented workaround (from the rules_cuda README) is to force the
+# local spawn strategy so worker count drops to 1.
+build --spawn_strategy=local
+
+# Architectures: emit two specs so the single binary supports both
+# PrimeIntellect H100 (sm_90 / Hopper) and A100 (sm_80 / Ampere).
+#
+# rules_cuda archs DSL:
+#   compute_X:sm_Y[,sm_Z]  -> PTX compute_X + SASS for listed gpu_archs
+#   sm_Y[;sm_Z...]          -> two separate specs, each auto-populates
+#                               PTX at the matching compute capability.
+#
+# We need TWO specs because compute_90 PTX cannot back-compile to sm_80
+# SASS (PTX is forward-only). Likewise compute_80 PTX cannot target sm_90.
+build --@rules_cuda//cuda:archs=compute_80:sm_80;compute_90:sm_90
+
+# Default C++ standard for cc_library / cc_binary not explicitly set.
+build --cxxopt=-std=c++20
+
+# PrimeIntellect ubuntu_22_cuda_12 image has a broken gcc-12 install
+# (no cc1plus), but g++-11 works. Force bazel's auto-detected C/C++
+# toolchain to use working compilers.
+build --action_env=CC=gcc --action_env=CXX=g++
+
+# Show test output on failure to speed up CI debugging later.
+test --test_output=errors
+
+# Be quiet — Bazel info spam is noisy in agent logs.
+build --announce_rc
