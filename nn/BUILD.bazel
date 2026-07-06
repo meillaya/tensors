@@ -1,0 +1,24 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "module",
+    srcs = ["Module.cpp"],
+    hdrs = ["Module.hpp"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//tensor:tensor_core",
+        "//autograd:autograd_core",
+    ],
+)
+
+cc_test(
+    name = "module_test",
+    srcs = ["module_test.cpp"],
+    deps = [
+        ":module",
+        "//tensor:tensor_core",
+        "//autograd:autograd_core",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["cpu"],
+)
