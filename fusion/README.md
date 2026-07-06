@@ -18,6 +18,22 @@ launches with their corresponding global-memory round-trips.
 | Demo scaffolding (`fusion/demo.py`) | done — T43 |
 | GPU benchmark | deferred — needs GPU pod |
 
+## Running locally (no GPU)
+
+```bash
+# IR + codegen module tests
+pytest fusion/ -v
+
+# Demo scaffold prints "deferred to pod" and exits 1
+python3 fusion/demo.py
+```
+
+When `find_nvcc()` returns `None`, all `nvcc`-gated pytest cases skip;
+the rest pass on a plain interpreter. On a PrimeIntellect pod (with
+CUDA toolkit installed), the `TestCompileAndLoad` suite compiles and
+loads a real `.so` and pytest reports the previously skipped 4 tests
+as `PASSED`.
+
 ## IR design
 
 Every node descends from `fusion.ir.Expr` and implements `codegen() -> str`
@@ -89,3 +105,9 @@ python3 fusion/demo.py
 Expected outcome: fused kernel achieves **≥1.5× speedup** vs separate
 `mul`, `add`, `relu` kernels on a large input vector (≥10M elements),
 measured by `cudaEvent_t` round-trip time end-to-end.
+
+On this dev machine (no GPU + GCC too new for CUDA 12.6), `demo.py`
+prints a clear "deferred to pod" message and returns exit 1. The
+scaffolding is wired end-to-end so that the real benchmark on a pod
+is just `python3 fusion/demo.py --arch=sm_90` with nothing else to
+change.
