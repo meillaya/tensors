@@ -1,0 +1,24 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "autograd_core",
+    srcs = [
+        "AddBackward.cpp",
+        "SavedTensor.cpp",
+    ],
+    hdrs = [
+        "AddBackward.hpp",
+        "IntrusivePtr.hpp",
+        "Node.hpp",
+        "SavedTensor.hpp",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["//tensor:tensor_core"],
+)
+
+cc_test(
+    name = "node_test",
+    srcs = ["node_test.cpp"],
+    deps = [":autograd_core", "//third_party/doctest:doctest"],
+    tags = ["cpu"],
+)
