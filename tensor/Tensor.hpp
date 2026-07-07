@@ -112,6 +112,9 @@ public:
     // indexing supported. CPU Float32 for v1.
     [[nodiscard]] Tensor sum(int64_t dim, bool keepdim = false) const;
 
+    // T46: scalar mean over all elements. CPU Float32 for v1.
+    [[nodiscard]] Tensor mean() const;
+
     // T34: instance transpose with negative-index support. Returns a view
     // over the same storage with swapped shape/stride.
     [[nodiscard]] Tensor transpose(int64_t dim0, int64_t dim1) const;

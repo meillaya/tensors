@@ -141,3 +141,29 @@ cc_test(
     ],
     tags = ["cpu", "autograd", "fp32"],
 )
+# CrossEntropyLoss (T46) — log_softmax + NLL on CPU Float32. Forward-only
+# in v1; backward + autograd wiring land in a later task.
+cc_library(
+    name = "cross_entropy_loss",
+    srcs = ["CrossEntropyLoss.cpp"],
+    hdrs = ["CrossEntropyLoss.hpp"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":module",
+        "//tensor:tensor_core",
+        "//tensor:factory",
+    ],
+)
+
+cc_test(
+    name = "cross_entropy_test",
+    srcs = ["cross_entropy_test.cpp"],
+    deps = [
+        ":cross_entropy_loss",
+        ":module",
+        "//tensor:tensor_core",
+        "//tensor:factory",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["cpu", "autograd", "fp32"],
+)

@@ -556,6 +556,22 @@ Tensor Tensor::sum(int64_t dim, bool keepdim) const {
     return out;
 }
 
+Tensor Tensor::mean() const {
+    // T46: scalar mean over all elements. CPU Float32 for v1.
+    if (this->device().type != DeviceType::CPU || dtype() != Dtype::Float32) {
+        throw std::invalid_argument("Tensor::mean: CPU Float32 only in v1");
+    }
+    int64_t n = numel();
+    auto cpu = this->to(Device::cpu());
+    const float* p = static_cast<const float*>(cpu.data());
+    float s = 0.0f;
+    for (int64_t i = 0; i < n; ++i) s += p[i];
+    float mean_val = s / static_cast<float>(n);
+    Tensor out = Tensor::empty(Shape{1}, Dtype::Float32, device());
+    static_cast<float*>(out.data())[0] = mean_val;
+    return out;
+}
+
 Tensor Tensor::transpose(int64_t dim0, int64_t dim1) const {
     int64_t ndim = static_cast<int64_t>(shape_.ndim());
     if (dim0 < 0) dim0 += ndim;
