@@ -58,7 +58,7 @@ flowchart TB
         Alloc["memory/CudaStorageAllocator<br/>(cudaMallocAsync + per-device cudaMemPool)"]
     end
 
-    subgraph Tensor["tensor/ (CPU + GPU Tensors)"]
+    subgraph TensorCore["tensor/ (CPU + GPU Tensors)"]
         Tensor["Tensor<br/>Storage, Shape, Stride,<br/>Dtype, Device, AutogradMeta"]
         Mdspan["sandia-iso/mdspan<br/>(slice, select, narrow views)"]
     end
