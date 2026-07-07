@@ -35,14 +35,6 @@ public:
         for (int64_t i = 0; i < outer; ++i) {
             gxp[i] = up_p[0];
         }
-        if (grad_x.dtype() == Dtype::Float32 && grad_x.numel() > 0) {
-            const float* p = static_cast<const float*>(grad_x.data());
-            fprintf(stderr, "[SumBackward] out: ");
-            for (int64_t i = 0; i < grad_x.numel() && i < 8; ++i) {
-                fprintf(stderr, "%.4f ", p[i]);
-            }
-            fprintf(stderr, " up=%.4f\n", up_p[0]);
-        }
         return {std::move(grad_x)};
     }
 
