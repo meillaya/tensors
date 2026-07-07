@@ -115,3 +115,31 @@ cc_test(
     ],
     tags = ["gpu", "fp32", "fp16"],
 )
+
+# GEMM (T22-T24) — naive, 16x16 tiled, optimized double-buffered variants.
+# All share a single .cu translation unit; launcher functions are exported
+# by name and dispatched by dtype in launch_gemm_*.
+cuda_library(
+    name = "gemm",
+    srcs = ["gemm.cu"],
+    hdrs = ["gemm.cuh"],
+    deps = [
+        "//cuda:context",
+        "//tensor:tensor_types",
+    ],
+)
+
+cc_test(
+    name = "gemm_naive_test",
+    srcs = ["gemm_naive_test.cpp"],
+    deps = [
+        ":gemm",
+        "//cuda:context",
+        "//cuda/memory:allocator",
+        "//tensor:factory",
+        "//tensor:tensor_core",
+        "//tensor:tensor_types",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["gpu", "fp32", "fp16", "bf16"],
+)
