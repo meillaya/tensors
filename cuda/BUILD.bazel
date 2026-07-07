@@ -1,0 +1,33 @@
+"""TensorForge — cuda/ Bazel build (Wave 3 / T14+).
+
+Wrappers around CUDA primitives (streams, events, DeviceContext) live here.
+T17+ adds :elementwise, :softmax, :layernorm, :gemm, :im2col, :col2im.
+"""
+
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@rules_cuda//cuda:defs.bzl", "cuda_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cuda_library(
+    name = "context",
+    srcs = ["CudaContext.cpp"],
+    hdrs = ["CudaContext.hpp", "CudaContextForward.hpp"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "kernel_registry",
+    hdrs = ["CudaKernelRegistry.hpp"],
+    visibility = ["//visibility:public"],
+)
+
+cc_test(
+    name = "context_test",
+    srcs = ["cuda_context_test.cpp"],
+    deps = [
+        ":context",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["gpu"],
+)
