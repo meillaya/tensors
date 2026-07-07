@@ -1,3 +1,5 @@
+// TensorForge — factory functions (Wave 1-3, T16 extension)
+
 #include "tensor/factory.hpp"
 
 #include "tensor/CPUStorageAllocator.hpp"
@@ -19,7 +21,6 @@ void fill_with_value(void* data, int64_t numel, double value, Dtype dtype) {
         break;
     }
     case Dtype::Float16: {
-        // Minimal Float16 storage: reinterpret uint16_t bits as half.
         uint16_t v = static_cast<uint16_t>(static_cast<int16_t>(value));
         uint16_t* ptr = static_cast<uint16_t*>(data);
         std::fill(ptr, ptr + numel, v);
@@ -62,16 +63,30 @@ void fill_arange(void* data, int64_t numel, int64_t start, int64_t step, Dtype d
         break;
     }
     case Dtype::Float16: {
+        // FP16 bit pattern: convert through float for correctness.
         uint16_t* ptr = static_cast<uint16_t*>(data);
         for (int64_t i = 0; i < numel; ++i) {
-            ptr[i] = static_cast<uint16_t>(start + i * step);
+            float v = static_cast<float>(start + i * step);
+            uint32_t bits;
+            std::memcpy(&bits, &v, sizeof(float));
+            uint32_t sign = (bits >> 31) & 0x1;
+            uint32_t exp = (bits >> 23) & 0xff;
+            uint32_t mantissa = bits & 0x7fffff;
+            uint32_t fp16_exp = (exp == 0) ? 0 : (exp - 127 + 15);
+            if (fp16_exp >= 31) fp16_exp = 31;
+            uint32_t fp16_bits = (sign << 15) | (fp16_exp << 10) | (mantissa >> 13);
+            ptr[i] = static_cast<uint16_t>(fp16_bits);
         }
         break;
     }
     case Dtype::BFloat16: {
         uint16_t* ptr = static_cast<uint16_t*>(data);
         for (int64_t i = 0; i < numel; ++i) {
-            ptr[i] = static_cast<uint16_t>(start + i * step);
+            float v = static_cast<float>(start + i * step);
+            uint32_t bits;
+            std::memcpy(&bits, &v, sizeof(float));
+            // BF16 is the top 16 bits of FP32.
+            ptr[i] = static_cast<uint16_t>(bits >> 16);
         }
         break;
     }
@@ -99,10 +114,12 @@ void fill_arange(void* data, int64_t numel, int64_t start, int64_t step, Dtype d
     }
 }
 
-void ensure_cpu(Device device) {
-    if (device.type != DeviceType::CPU) {
-        throw std::invalid_argument("factory ops only support CPU devices in Wave 2");
-    }
+// Build a CPU staging tensor then move to target device.
+Tensor build_via_cpu(Shape shape, Dtype dtype, Device target,
+                      void (*cpu_fill)(void*, int64_t, Dtype)) {
+    Tensor cpu = Tensor::empty(shape, dtype, Device::cpu());
+    cpu_fill(cpu.data(), cpu.numel(), dtype);
+    return cpu.to(target);
 }
 
 } // namespace
@@ -116,14 +133,19 @@ Tensor ones(Shape shape, Dtype dtype, Device device) {
 }
 
 Tensor full(Shape shape, double value, Dtype dtype, Device device) {
-    ensure_cpu(device);
-    Tensor t = Tensor::empty(shape, dtype, device);
-    fill_with_value(t.data(), t.numel(), value, dtype);
-    return t;
+    if (device.type == DeviceType::CPU) {
+        Tensor t = Tensor::empty(shape, dtype, device);
+        fill_with_value(t.data(), t.numel(), value, dtype);
+        return t;
+    }
+    // For CUDA: build on CPU then move. Avoids needing a dedicated CUDA fill
+    // kernel in T16.
+    Tensor cpu = Tensor::empty(shape, dtype, Device::cpu());
+    fill_with_value(cpu.data(), cpu.numel(), value, dtype);
+    return cpu.to(device);
 }
 
 Tensor arange(int64_t start, int64_t end, int64_t step, Dtype dtype, Device device) {
-    ensure_cpu(device);
     if (step == 0) {
         throw std::invalid_argument("arange step must not be zero");
     }
@@ -135,20 +157,19 @@ Tensor arange(int64_t start, int64_t end, int64_t step, Dtype dtype, Device devi
         count = (start > end) ? (start - end - step - 1) / (-step) : 0;
     }
 
-    Tensor t = Tensor::empty(Shape{count}, dtype, device);
-    fill_arange(t.data(), t.numel(), start, step, dtype);
-    return t;
+    if (device.type == DeviceType::CPU) {
+        Tensor t = Tensor::empty(Shape{count}, dtype, device);
+        fill_arange(t.data(), t.numel(), start, step, dtype);
+        return t;
+    }
+
+    Tensor cpu = Tensor::empty(Shape{count}, dtype, Device::cpu());
+    fill_arange(cpu.data(), cpu.numel(), start, step, dtype);
+    return cpu.to(device);
 }
 
 Tensor copy(const Tensor& src, Device dst_device) {
-    ensure_cpu(dst_device);
-    if (src.device().type != DeviceType::CPU) {
-        throw std::invalid_argument("copy only supports CPU source in Wave 2");
-    }
-
-    Tensor dst = Tensor::empty(src.shape(), src.dtype(), dst_device);
-    std::memcpy(dst.data(), src.data(), static_cast<size_t>(src.numel()) * dtype_size(src.dtype()));
-    return dst;
+    return src.to(dst_device);
 }
 
 } // namespace tensorforge

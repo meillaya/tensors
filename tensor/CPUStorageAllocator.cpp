@@ -1,7 +1,16 @@
+// TensorForge — CPU storage allocator (Wave 3 / T15)
+//
+// Aligned allocation for CPU storage + the allocator_dispatch registry that
+// routes per-device allocations to the right backend. Tensor::empty calls
+// into allocator_dispatch::allocate, which falls back to the CPU allocator
+// when no CUDA allocator has been registered.
+
 #include "tensor/CPUStorageAllocator.hpp"
 
 #include <cstdlib>
+#include <mutex>
 #include <stdexcept>
+#include <utility>
 
 namespace tensorforge {
 
@@ -19,6 +28,38 @@ size_t round_up_to_multiple(size_t value, size_t multiple) {
     }
     return value + (multiple - remainder);
 }
+
+struct AllocatorSlot {
+    allocator_dispatch::AllocateFn allocate = nullptr;
+    allocator_dispatch::FreeFn free = nullptr;
+};
+
+std::mutex& registry_mutex() {
+    static std::mutex m;
+    return m;
+}
+
+AllocatorSlot& slot_for(DeviceType type) {
+    static AllocatorSlot slots[8] = {};
+    return slots[static_cast<uint8_t>(type)];
+}
+
+Storage cpu_allocate_dispatch(size_t size_bytes, Device device, Dtype dtype) {
+    return CPUStorageAllocator::instance().allocate(size_bytes, device, dtype);
+}
+
+void cpu_free_dispatch(Storage storage) {
+    CPUStorageAllocator::instance().free(storage);
+}
+
+struct RegisterOnLoad {
+    RegisterOnLoad() {
+        allocator_dispatch::register_allocator(DeviceType::CPU,
+                                               cpu_allocate_dispatch,
+                                               cpu_free_dispatch);
+    }
+};
+RegisterOnLoad g_register_cpu_on_load;
 
 } // namespace
 
@@ -49,5 +90,70 @@ CPUStorageAllocator& CPUStorageAllocator::instance() {
     static CPUStorageAllocator instance;
     return instance;
 }
+
+namespace allocator_dispatch {
+
+void register_allocator(DeviceType type, AllocateFn alloc_fn, FreeFn free_fn) {
+    std::lock_guard<std::mutex> lock(registry_mutex());
+    auto& slot = slot_for(type);
+    slot.allocate = alloc_fn;
+    slot.free = free_fn;
+}
+
+AllocateFn get_allocator(DeviceType type) {
+    std::lock_guard<std::mutex> lock(registry_mutex());
+    return slot_for(type).allocate;
+}
+
+FreeFn get_deallocator(DeviceType type) {
+    std::lock_guard<std::mutex> lock(registry_mutex());
+    return slot_for(type).free;
+}
+
+Storage allocate(size_t size_bytes, Device device, Dtype dtype) {
+    AllocateFn fn = get_allocator(device.type);
+    if (fn == nullptr) {
+        throw std::runtime_error(
+            "No allocator registered for device type. Did you link the CUDA "
+            "allocator library? Or for CPU-only build, this is a programming error.");
+    }
+    return fn(size_bytes, device, dtype);
+}
+
+void free_storage(Storage storage) {
+    if (!storage) {
+        return;
+    }
+    FreeFn fn = get_deallocator(storage->device().type);
+    if (fn == nullptr) {
+        return;
+    }
+    fn(storage);
+}
+
+// ---------------------------------------------------------------------------
+// CudaCopyFn registry
+// ---------------------------------------------------------------------------
+
+CudaCopyFn& cuda_copy_slot() {
+    static CudaCopyFn fn = nullptr;
+    return fn;
+}
+
+void register_cuda_copy(CudaCopyFn fn) {
+    std::lock_guard<std::mutex> lock(registry_mutex());
+    cuda_copy_slot() = fn;
+}
+
+CudaCopyFn get_cuda_copy() {
+    std::lock_guard<std::mutex> lock(registry_mutex());
+    return cuda_copy_slot();
+}
+
+bool cuda_copy_available() {
+    return get_cuda_copy() != nullptr;
+}
+
+} // namespace allocator_dispatch
 
 } // namespace tensorforge

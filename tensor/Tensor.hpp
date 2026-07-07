@@ -73,6 +73,19 @@ public:
     [[nodiscard]] Tensor relu() const;
     [[nodiscard]] Tensor sigmoid() const;
     [[nodiscard]] Tensor tanh() const;
+    [[nodiscard]] Tensor leaky_relu(float alpha) const;
+
+    // Move/clone across devices or dtypes. Async on the current device's
+    // stream — call cudaStreamSynchronize (or equivalent) before reading the
+    // result on the host.
+    [[nodiscard]] Tensor to(Device device) const;
+    [[nodiscard]] Tensor to(Dtype dtype) const;
+    [[nodiscard]] Tensor to(Device device, Dtype dtype) const;
+
+    // Elementwise binary ops (T17/T18). Both operands must share shape and
+    // dtype and device. Output is a new tensor.
+    [[nodiscard]] Tensor operator+(const Tensor& other) const;
+    [[nodiscard]] Tensor operator*(const Tensor& other) const;
 
 private:
     Storage storage_;

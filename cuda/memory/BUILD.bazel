@@ -1,0 +1,44 @@
+"""TensorForge — cuda/memory/ Bazel build (Wave 3 / T15).
+
+cudaMallocAsync-based StorageAllocator. The class lives under cuda/ so that
+tensor/ doesn't have to depend on CUDA headers; tensor/Tensor.cpp dispatches
+based on the device type and pulls in this allocator via a thin facade.
+"""
+
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@rules_cuda//cuda:defs.bzl", "cuda_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cuda_library(
+    name = "allocator",
+    srcs = ["CudaStorageAllocator.cpp"],
+    hdrs = ["CudaStorageAllocator.hpp"],
+    visibility = ["//visibility:public"],
+    deps = ["//cuda:context"],
+    alwayslink = True,
+)
+
+cc_test(
+    name = "storage_allocator_test",
+    srcs = ["storage_allocator_test.cpp"],
+    deps = [
+        ":allocator",
+        "//cuda:context",
+        "//tensor:storage",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["gpu"],
+)
+
+cc_test(
+    name = "tensor_cuda_dispatch_test",
+    srcs = ["tensor_cuda_dispatch_test.cpp"],
+    deps = [
+        ":allocator",
+        "//cuda:context",
+        "//tensor:tensor_core",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["gpu"],
+)
