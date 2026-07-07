@@ -1,0 +1,32 @@
+"""TensorForge — benchmarks/ Bazel build (Wave 5 / T25).
+
+GPU-side op-level benchmarks. Each is a `cc_binary` (NOT `cc_test`) that
+prints structured output and exits 0 — they are run via `bazelisk run`,
+not `bazelisk test`.
+
+For now this is GEMM-only; benchmarks for other ops (softmax, layernorm,
+conv2d) land with their respective waves.
+"""
+
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@rules_cuda//cuda:defs.bzl", "cuda_library")
+
+package(default_visibility = ["//visibility:public"])
+
+# GEMM benchmark binary — links the gemm library + cuBLAS via the
+# rules_cuda-sourced hermetic toolkit alias @cuda//:cublas. Also pulls
+# in the CUDA allocator with alwayslink so its static initializer
+# registers the GPU storage allocator (Tensor::full needs this).
+cc_binary(
+    name = "gemm_bench",
+    srcs = ["gemm_bench.cpp"],
+    deps = [
+        "//cuda/kernels:gemm",
+        "//cuda/memory:allocator",
+        "//tensor:factory",
+        "//tensor:tensor_core",
+        "//tensor:tensor_types",
+        "@cuda//:cublas",
+    ],
+    tags = ["gpu", "bench"],
+)
