@@ -13,3 +13,35 @@ cc_test(
     deps = ["//third_party/doctest:doctest"],
     tags = ["gpu"],  # Skipped at runtime; safe if accidentally run on CPU
 )
+
+cc_test(
+    name = "edge_cases_test",
+    srcs = ["edge_cases_test.cpp"],
+    deps = [
+        "//tensor:factory",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["cpu"],
+)
+
+cc_test(
+    name = "integration_test",
+    srcs = ["integration_test.cpp"],
+    deps = [
+        "//tensor:factory",
+        "//autograd:autograd_core",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["cpu"],
+)
+
+cc_test(
+    name = "operator_autograd_test",
+    srcs = ["operator_autograd_test.cpp"],
+    deps = [
+        "//tensor:factory",
+        "//autograd:autograd_core",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["cpu", "autograd", "fp32"],
+)

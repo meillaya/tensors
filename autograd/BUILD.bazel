@@ -20,6 +20,7 @@ cc_library(
         "IntrusivePtr.hpp",
         "Node.hpp",
         "SavedTensor.hpp",
+        "ops/MulBackward.hpp",
     ],
     visibility = ["//visibility:public"],
     deps = ["//tensor:tensor_core"],

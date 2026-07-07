@@ -1,4 +1,5 @@
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@rules_cuda//cuda:defs.bzl", "cuda_library")
 
 cc_library(
     name = "tensor_types",
@@ -49,12 +50,20 @@ cc_test(
     tags = ["cpu"],
 )
 
+# tensor_core — CPU compiled (g++). The CUDA codepath in Tensor.cpp is
+# reached through a function-pointer registration so we don't include
+# cuda_runtime.h from this translation unit. The CUDA allocator and kernel
+# libraries register themselves via their static initializers.
 cc_library(
     name = "tensor_core",
     srcs = ["Tensor.cpp", "Storage.cpp", "CPUStorageAllocator.cpp"],
-    hdrs = ["Tensor.hpp", "Storage.hpp", "CPUStorageAllocator.hpp", "Shape.hpp", "Stride.hpp", "Dtype.hpp", "Device.hpp"],
+    hdrs = ["Tensor.hpp", "Storage.hpp", "CPUStorageAllocator.hpp", "AutogradWirer.hpp", "Shape.hpp", "Stride.hpp", "Dtype.hpp", "Device.hpp"],
     visibility = ["//visibility:public"],
-    deps = [":tensor_types", ":storage"],
+    deps = [
+        ":tensor_types",
+        ":storage",
+        "//cuda:kernel_registry",
+    ],
 )
 
 cc_test(
@@ -82,9 +91,9 @@ cc_test(
 cc_library(
     name = "factory",
     srcs = ["factory.cpp", "shape_ops.cpp", "slicing.cpp", "Tensor.cpp", "Storage.cpp", "CPUStorageAllocator.cpp"],
-    hdrs = ["factory.hpp", "shape_ops.hpp", "slicing.hpp", "Tensor.hpp", "Storage.hpp", "CPUStorageAllocator.hpp", "Shape.hpp", "Stride.hpp", "Dtype.hpp", "Device.hpp"],
+    hdrs = ["factory.hpp", "shape_ops.hpp", "slicing.hpp", "Tensor.hpp", "Storage.hpp", "CPUStorageAllocator.hpp", "AutogradWirer.hpp", "Shape.hpp", "Stride.hpp", "Dtype.hpp", "Device.hpp"],
     visibility = ["//visibility:public"],
-    deps = [":tensor_types", ":storage", "//third_party/mdspan:mdspan"],
+    deps = [":tensor_types", ":storage", "//cuda:kernel_registry", "//third_party/mdspan:mdspan"],
 )
 
 cc_test(
@@ -99,4 +108,18 @@ cc_test(
     srcs = ["shape_ops_test.cpp"],
     deps = [":factory", "//third_party/doctest:doctest"],
     tags = ["cpu"],
+)
+
+cc_test(
+    name = "to_test",
+    srcs = ["tensor_to_test.cpp"],
+    deps = [
+        ":factory",
+        ":tensor_core",
+        "//cuda:context",
+        "//cuda:kernel_registry",
+        "//cuda/memory:allocator",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["cpu", "gpu"],
 )
