@@ -50,11 +50,8 @@ void read_idx_images(const std::string& path, std::vector<float>& out_data, int6
         throw std::runtime_error("MNIST IDX: bad magic for image file: 0x" + std::to_string(magic));
     }
 
-    const uint32_t num_dims = read_be_u32(in);
-    if (num_dims != 3) {
-        throw std::runtime_error("MNIST IDX: image file expected 3 dims, got " + std::to_string(num_dims));
-    }
-
+    // The MNIST IDX image file layout (per yann.lecun.com/exdb/mnist) is
+    // magic | count | rows | cols | pixels — no separate `num_dims` field.
     const uint32_t count = read_be_u32(in);
     const uint32_t rows = read_be_u32(in);
     const uint32_t cols = read_be_u32(in);
@@ -95,11 +92,8 @@ void read_idx_labels(const std::string& path, std::vector<int64_t>& out_labels, 
         throw std::runtime_error("MNIST IDX: bad magic for label file: 0x" + std::to_string(magic));
     }
 
-    const uint32_t num_dims = read_be_u32(in);
-    if (num_dims != 1) {
-        throw std::runtime_error("MNIST IDX: label file expected 1 dim, got " + std::to_string(num_dims));
-    }
-
+    // Label IDX layout: magic | count | labels — same as images, no
+    // separate num_dims field.
     const uint32_t count = read_be_u32(in);
     std::vector<uint8_t> raw(count);
     in.read(reinterpret_cast<char*>(raw.data()), static_cast<std::streamsize>(count));

@@ -1,0 +1,15 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+cc_binary(
+    name = "train_mlp",
+    srcs = ["train_mlp.cpp"],
+    deps = [
+        "//data:mnist",
+        "//nn:linear",
+        "//nn:activations",
+        "//nn/optim:optim",
+        "//autograd:autograd_core",
+        "//tensor:tensor_core",
+        "//tensor:factory",
+    ],
+)

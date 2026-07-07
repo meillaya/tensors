@@ -167,3 +167,17 @@ cc_test(
     ],
     tags = ["cpu", "autograd", "fp32"],
 )
+
+
+# Linear (T47) — y = x @ W^T + b, autograd via pre-existing matmul + add wirers.
+cc_library(
+    name = "linear",
+    srcs = ["Linear.cpp"],
+    hdrs = ["Linear.hpp"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":module",
+        "//tensor:tensor_core",
+        "//tensor:factory",
+    ],
+)

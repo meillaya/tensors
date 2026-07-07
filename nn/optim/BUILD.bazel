@@ -1,0 +1,12 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "optim",
+    srcs = ["SGD.cpp"],
+    hdrs = ["SGD.hpp"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//tensor:tensor_core",
+        "//tensor:factory",
+    ],
+)

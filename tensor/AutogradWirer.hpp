@@ -63,4 +63,10 @@ void register_log_softmax_wirer(AutogradSoftmaxWirerFn fn);
 void register_layernorm_wirer(AutogradLayerNormWirerFn fn);
 void register_sum_wirer(AutogradReduceWirerFn fn);
 
+// Idempotent toggle that registers all of the above wirers at once.
+// Examples / tests should call this from main() so the registrar
+// inside TensorAutograd.cpp cannot be GC'd by the linker. Safe to
+// call multiple times.
+void init_tensor_autograd();
+
 } // namespace tensorforge

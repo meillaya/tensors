@@ -288,3 +288,30 @@ WirerRegistrar g_wirer_registrar;
 
 
 } // namespace tensorforge
+namespace tensorforge {
+
+// Idempotent public toggle that installs the C-style autograd wirers.
+// The static WirerRegistrar in this TU lives in an anonymous namespace,
+// so the linker can strip its constructor when no symbol in the final
+// binary references this translation unit — that silently breaks
+// backward() with a "tensor without grad_fn" error. Examples and tests
+// should call this from main() so registration actually runs.
+void init_tensor_autograd() {
+    static bool initialised = false;
+    if (initialised) return;
+    initialised = true;
+    register_add_wirer(&wire_add);
+    register_mul_wirer(&wire_mul);
+    register_matmul_wirer(&wire_matmul);
+    register_relu_wirer(&wire_relu);
+    register_sigmoid_wirer(&wire_sigmoid);
+    register_tanh_wirer(&wire_tanh);
+    register_leaky_relu_wirer(&wire_leaky_relu);
+    register_log_wirer(&wire_log);
+    register_softmax_wirer(&wire_softmax);
+    register_log_softmax_wirer(&wire_log_softmax);
+    register_layernorm_wirer(&wire_layernorm);
+    register_sum_wirer(&wire_sum);
+}
+
+}  // namespace tensorforge
