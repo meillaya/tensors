@@ -113,3 +113,31 @@ cc_test(
     ],
     tags = ["gpu", "fp32"],
 )
+
+# Conv2dModule (T45) — CPU forward with Kaiming-uniform weight init and
+# optional bias. Kept CPU-only for v1 (the GPU path lives in :conv2d via
+# launch_im2col + launch_gemm_tiled_16x16).
+cc_library(
+    name = "conv2d_module",
+    srcs = ["Conv2dModule.cpp"],
+    hdrs = ["Conv2dModule.hpp"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":module",
+        "//tensor:tensor_core",
+        "//tensor:factory",
+    ],
+)
+
+cc_test(
+    name = "conv2d_module_test",
+    srcs = ["conv2d_module_test.cpp"],
+    deps = [
+        ":conv2d_module",
+        ":module",
+        "//tensor:tensor_core",
+        "//tensor:factory",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["cpu", "autograd", "fp32"],
+)
