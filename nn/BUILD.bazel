@@ -6,6 +6,7 @@ cc_library(
     hdrs = ["Module.hpp"],
     visibility = ["//visibility:public"],
     deps = [
+
         "//tensor:tensor_core",
         "//autograd:autograd_core",
     ],
@@ -15,6 +16,7 @@ cc_test(
     name = "module_test",
     srcs = ["module_test.cpp"],
     deps = [
+
         ":module",
         "//tensor:tensor_core",
         "//autograd:autograd_core",
@@ -29,6 +31,7 @@ cc_library(
     hdrs = ["Activations.hpp"],
     visibility = ["//visibility:public"],
     deps = [
+
         ":module",
         "//tensor:tensor_core",
     ],
@@ -38,6 +41,7 @@ cc_test(
     name = "activations_module_test",
     srcs = ["activations_module_test.cpp"],
     deps = [
+
         ":activations",
         ":module",
         "//tensor:tensor_core",
@@ -52,9 +56,13 @@ cc_library(
     hdrs = ["Conv2d.hpp"],
     visibility = ["//visibility:public"],
     deps = [
+
         ":module",
         "//cuda:context",
         "//cuda/kernels:bias_add",
+        "//cuda/kernels:col2im",
+        "//cuda/kernels:reduce_sum_axis",
+        "//cuda/kernels:transpose",
         "//cuda/kernels:gemm",
         "//cuda/kernels:im2col",
         "//tensor:factory",
@@ -66,9 +74,13 @@ cc_test(
     name = "conv2d_forward_test",
     srcs = ["conv2d_forward_test.cpp"],
     deps = [
+
         ":conv2d",
         "//cuda:context",
         "//cuda/kernels:bias_add",
+        "//cuda/kernels:col2im",
+        "//cuda/kernels:reduce_sum_axis",
+        "//cuda/kernels:transpose",
         "//cuda/kernels:gemm",
         "//cuda/kernels:im2col",
         "//cuda/memory:allocator",
@@ -84,10 +96,13 @@ cc_test(
     name = "conv2d_backward_test",
     srcs = ["conv2d_backward_test.cpp"],
     deps = [
+
         ":conv2d",
         "//cuda:context",
         "//cuda/kernels:bias_add",
         "//cuda/kernels:col2im",
+        "//cuda/kernels:reduce_sum_axis",
+        "//cuda/kernels:transpose",
         "//cuda/kernels:gemm",
         "//cuda/kernels:im2col",
         "//cuda/memory:allocator",

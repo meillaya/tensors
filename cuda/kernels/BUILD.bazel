@@ -210,3 +210,36 @@ cuda_library(
         "//tensor:tensor_types",
     ],
 )
+
+# col2im (T28) — inverse of im2col, scatter-add into input_grad.
+cuda_library(
+    name = "col2im",
+    srcs = ["col2im.cu"],
+    hdrs = ["col2im.cuh"],
+    deps = [
+        "//cuda:context",
+        "//tensor:tensor_types",
+    ],
+)
+
+# reduce_sum_axis (T28) — sum-over-(N,H,W) reducing NCHW to [C].
+cuda_library(
+    name = "reduce_sum_axis",
+    srcs = ["reduce_sum_axis.cu"],
+    hdrs = ["reduce_sum_axis.cuh"],
+    deps = [
+        "//cuda:context",
+        "//tensor:tensor_types",
+    ],
+)
+
+# transpose_2d (T28) — materialise a row-major 2D transpose for grad_input.
+cuda_library(
+    name = "transpose",
+    srcs = ["transpose.cu"],
+    hdrs = ["transpose.cuh"],
+    deps = [
+        "//cuda:context",
+        "//tensor:tensor_types",
+    ],
+)
