@@ -181,3 +181,17 @@ cc_library(
         "//tensor:factory",
     ],
 )
+
+cc_test(
+    name = "linear_test",
+    srcs = ["linear_test.cpp"],
+    deps = [
+        ":linear",
+        ":module",
+        "//tensor:tensor_core",
+        "//tensor:factory",
+        "//autograd:autograd_core",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["cpu", "autograd", "fp32"],
+)

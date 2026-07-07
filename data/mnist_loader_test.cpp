@@ -60,7 +60,6 @@ void write_synthetic_idx_dir(const std::filesystem::path& dir, int64_t n) {
     {
         std::ofstream out(image_path, std::ios::binary);
         write_be_u32(out, kMagicImage);
-        write_be_u32(out, 3);
         write_be_u32(out, static_cast<uint32_t>(n));
         write_be_u32(out, 28);
         write_be_u32(out, 28);
@@ -70,7 +69,6 @@ void write_synthetic_idx_dir(const std::filesystem::path& dir, int64_t n) {
     {
         std::ofstream out(label_path, std::ios::binary);
         write_be_u32(out, kMagicLabel);
-        write_be_u32(out, 1);
         write_be_u32(out, static_cast<uint32_t>(n));
         out.write(reinterpret_cast<const char*>(label_bytes.data()),
                   static_cast<std::streamsize>(label_bytes.size()));
@@ -127,7 +125,6 @@ TEST_CASE("MnistLoader errors on image/label count mismatch") {
     {
         std::ofstream out(tmp / "train-labels-idx1-ubyte", std::ios::binary);
         write_be_u32(out, kMagicLabel);
-        write_be_u32(out, 1);
         write_be_u32(out, static_cast<uint32_t>(kN + 1));
         std::vector<uint8_t> wrong(static_cast<size_t>(kN + 1), 0);
         out.write(reinterpret_cast<const char*>(wrong.data()),
@@ -159,7 +156,6 @@ TEST_CASE("MnistLoader errors on bad magic number") {
     {
         std::ofstream out(tmp / "train-labels-idx1-ubyte", std::ios::binary);
         write_be_u32(out, kMagicLabel);
-        write_be_u32(out, 1);
         write_be_u32(out, 1);
         char label = 0;
         out.write(&label, 1);

@@ -9,6 +9,7 @@
 #include "autograd/ops/MulBackward.hpp"
 #include "autograd/ops/ReluBackward.hpp"
 #include "autograd/ops/SoftmaxBackward.hpp"
+#include "autograd/ops/LogSoftmaxBackward.hpp"
 #include "autograd/ops/SumBackward.hpp"
 #include "autograd/ops/TransposeBackward.hpp"
 #include "tensor/AutogradWirer.hpp"
@@ -194,14 +195,12 @@ void wire_softmax(Tensor& out, const Tensor& x, int64_t /*dim*/) {
 }
 
 void wire_log_softmax(Tensor& out, const Tensor& x, int64_t /*dim*/) {
-    // log_softmax backward is softmax-backward minus grad_y itself.
-    // For v1 we reuse SoftmaxBackward because the test only checks
-    // numerical gradients via finite differences anyway.
+    // dL/dx_i = dL/dy_i - softmax(x)_i * sum_j(dL/dy_j)
     if (!x.requires_grad()) {
         return;
     }
     out.requires_grad(true);
-    auto grad_fn = std::make_shared<SoftmaxBackward>(out);
+    auto grad_fn = std::make_shared<LogSoftmaxBackward>(out);
     out.autograd_meta()->grad_fn_ = grad_fn;
     grad_fn->next_edges_ = {
         Edge(x.autograd_meta() ? x.autograd_meta()->grad_accumulator_ : nullptr, 0)

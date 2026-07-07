@@ -27,7 +27,7 @@ TEST_CASE("Linear gradient check") {
     Tensor x = full({2, 3}, 1.0f, Dtype::Float32, Device::cpu());
     x.requires_grad(true);
     Tensor y = fc.forward(x);
-    y.sum().backward();
+    y.sum(0).sum(0).backward();
     // x.grad should be sum of weight rows (broadcast)
     CHECK(x.grad().numel() == 6);
 }
