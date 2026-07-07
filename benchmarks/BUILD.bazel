@@ -1,11 +1,14 @@
-"""TensorForge — benchmarks/ Bazel build (Wave 5 / T25).
+"""TensorForge — benchmarks/ Bazel build (Wave 5 / T25, T48).
 
 GPU-side op-level benchmarks. Each is a `cc_binary` (NOT `cc_test`) that
 prints structured output and exits 0 — they are run via `bazelisk run`,
 not `bazelisk test`.
 
-For now this is GEMM-only; benchmarks for other ops (softmax, layernorm,
-conv2d) land with their respective waves.
+Targets:
+  * gemm_bench (T25) — naive/tiled/optimized GEMM vs cuBLAS, FP32/FP16/BF16.
+  * op_bench   (T48) — full op-level harness: add, mul, relu, sigmoid,
+    tanh, matmul, softmax, layernorm. Used for the
+    benchmarks/results/op_bench_results.json report.
 """
 
 load("@rules_cc//cc:defs.bzl", "cc_binary")
@@ -27,6 +30,31 @@ cc_binary(
         "//tensor:tensor_core",
         "//tensor:tensor_types",
         "@cuda//:cublas",
+    ],
+    tags = ["gpu", "bench"],
+)
+
+# Op-level benchmark binary (T48). Times every operator the runtime
+# exposes on CUDA: add, mul, relu, sigmoid, tanh, matmul (optimized),
+# softmax, layer-norm. Elementwise ops dispatch through Tensor's public
+# API; matmul/softmax/layernorm call the low-level launch_* functions
+# directly (the Tensor methods are CPU-only in v1).
+#
+# Deps pull in the CUDA allocator (alwayslink) so its static initializer
+# registers the GPU storage allocator that Tensor::full requires.
+cc_binary(
+    name = "op_bench",
+    srcs = ["op_bench.cpp"],
+    deps = [
+        "//cuda:context",
+        "//cuda/kernels:elementwise",
+        "//cuda/kernels:gemm",
+        "//cuda/kernels:layernorm",
+        "//cuda/kernels:softmax",
+        "//cuda/memory:allocator",
+        "//tensor:factory",
+        "//tensor:tensor_core",
+        "//tensor:tensor_types",
     ],
     tags = ["gpu", "bench"],
 )
