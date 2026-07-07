@@ -13,17 +13,17 @@ class Shape {
 public:
     Shape() = default;
 
-    constexpr Shape(std::initializer_list<int64_t> dims) : dims_(dims) {}
+    Shape(std::initializer_list<int64_t> dims) : dims_(dims) {}
 
     explicit Shape(std::vector<int64_t> dims) : dims_(std::move(dims)) {}
 
-    [[nodiscard]] constexpr int64_t operator[](size_t i) const { return dims_[i]; }
+    [[nodiscard]] int64_t operator[](size_t i) const { return dims_[i]; }
 
-    [[nodiscard]] constexpr int64_t& operator[](size_t i) { return dims_[i]; }
+    [[nodiscard]] int64_t& operator[](size_t i) { return dims_[i]; }
 
-    [[nodiscard]] constexpr size_t ndim() const noexcept { return dims_.size(); }
+    [[nodiscard]] size_t ndim() const noexcept { return dims_.size(); }
 
-    [[nodiscard]] constexpr int64_t numel() const {
+    [[nodiscard]] int64_t numel() const {
         if (dims_.empty()) {
             return 0;
         }
@@ -34,11 +34,11 @@ public:
 
     [[nodiscard]] std::vector<int64_t>& data() noexcept { return dims_; }
 
-    [[nodiscard]] constexpr bool operator==(const Shape& other) const noexcept {
+    [[nodiscard]] bool operator==(const Shape& other) const noexcept {
         return dims_ == other.dims_;
     }
 
-    [[nodiscard]] constexpr bool operator!=(const Shape& other) const noexcept {
+    [[nodiscard]] bool operator!=(const Shape& other) const noexcept {
         return !(*this == other);
     }
 

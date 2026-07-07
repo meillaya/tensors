@@ -89,6 +89,7 @@ AutogradUnaryWirerFn g_wire_log = nullptr;
 AutogradSoftmaxWirerFn g_wire_softmax = nullptr;
 AutogradSoftmaxWirerFn g_wire_log_softmax = nullptr;
 AutogradLayerNormWirerFn g_wire_layernorm = nullptr;
+AutogradReduceWirerFn g_wire_sum = nullptr;
 
 } // namespace
 
@@ -231,6 +232,9 @@ Tensor Tensor::relu() const {
         for (int64_t i = 0; i < numel(); ++i) {
             out_p[i] = in_p[i] > 0.0f ? in_p[i] : 0.0f;
         }
+        if (g_wire_relu != nullptr) {
+            g_wire_relu(out, *this);
+        }
         return out;
     }
 
@@ -239,6 +243,9 @@ Tensor Tensor::relu() const {
         throw std::runtime_error("CUDA relu kernel not registered");
     }
     fn(this->data(), out.data(), numel(), dtype(), g_current_stream);
+    if (g_wire_relu != nullptr) {
+        g_wire_relu(out, *this);
+    }
     return out;
 }
 
@@ -251,6 +258,9 @@ Tensor Tensor::sigmoid() const {
         for (int64_t i = 0; i < numel(); ++i) {
             out_p[i] = 1.0f / (1.0f + std::exp(-in_p[i]));
         }
+        if (g_wire_sigmoid != nullptr) {
+            g_wire_sigmoid(out, *this);
+        }
         return out;
     }
 
@@ -259,6 +269,9 @@ Tensor Tensor::sigmoid() const {
         throw std::runtime_error("CUDA sigmoid kernel not registered");
     }
     fn(this->data(), out.data(), numel(), dtype(), g_current_stream);
+    if (g_wire_sigmoid != nullptr) {
+        g_wire_sigmoid(out, *this);
+    }
     return out;
 }
 
@@ -271,6 +284,9 @@ Tensor Tensor::tanh() const {
         for (int64_t i = 0; i < numel(); ++i) {
             out_p[i] = std::tanh(in_p[i]);
         }
+        if (g_wire_tanh != nullptr) {
+            g_wire_tanh(out, *this);
+        }
         return out;
     }
 
@@ -279,6 +295,9 @@ Tensor Tensor::tanh() const {
         throw std::runtime_error("CUDA tanh kernel not registered");
     }
     fn(this->data(), out.data(), numel(), dtype(), g_current_stream);
+    if (g_wire_tanh != nullptr) {
+        g_wire_tanh(out, *this);
+    }
     return out;
 }
 
@@ -291,6 +310,9 @@ Tensor Tensor::leaky_relu(float alpha) const {
         for (int64_t i = 0; i < numel(); ++i) {
             out_p[i] = in_p[i] > 0.0f ? in_p[i] : alpha * in_p[i];
         }
+        if (g_wire_leaky_relu != nullptr) {
+            g_wire_leaky_relu(out, *this);
+        }
         return out;
     }
 
@@ -299,6 +321,9 @@ Tensor Tensor::leaky_relu(float alpha) const {
         throw std::runtime_error("CUDA leaky_relu kernel not registered");
     }
     fn(this->data(), out.data(), numel(), dtype(), alpha, g_current_stream);
+    if (g_wire_leaky_relu != nullptr) {
+        g_wire_leaky_relu(out, *this);
+    }
     return out;
 }
 
@@ -525,6 +550,9 @@ Tensor Tensor::sum(int64_t dim, bool keepdim) const {
         }
         o_p[oi] = s;
     }
+    if (g_wire_sum != nullptr) {
+        g_wire_sum(out, *this, dim, keepdim);
+    }
     return out;
 }
 
@@ -536,10 +564,33 @@ Tensor Tensor::transpose(int64_t dim0, int64_t dim1) const {
         throw std::out_of_range("Tensor::transpose: dim out of range");
     }
     Shape new_shape = shape_;
-    Stride new_stride = stride_;
     std::swap(new_shape.data()[dim0], new_shape.data()[dim1]);
-    std::swap(new_stride.data()[dim0], new_stride.data()[dim1]);
-    return Tensor(storage_, storage_offset_, std::move(new_shape), std::move(new_stride));
+    Tensor out = Tensor::empty(new_shape, dtype(), device());
+    std::vector<int64_t> in_strides(ndim);
+    in_strides[ndim - 1] = 1;
+    for (int64_t i = ndim - 2; i >= 0; --i) {
+        in_strides[i] = in_strides[i + 1] * shape_[i + 1];
+    }
+    std::vector<int64_t> out_coord(ndim);
+    std::vector<int64_t> in_coord(ndim);
+    const int64_t total = out.numel();
+    const float* in_p = static_cast<const float*>(this->data());
+    float* o_p = static_cast<float*>(out.data());
+    for (int64_t flat = 0; flat < total; ++flat) {
+        int64_t rem = flat;
+        for (int64_t d = ndim - 1; d >= 0; --d) {
+            out_coord[d] = rem % new_shape[d];
+            rem /= new_shape[d];
+        }
+        for (int64_t i = 0; i < ndim; ++i) in_coord[i] = out_coord[i];
+        std::swap(in_coord[dim0], in_coord[dim1]);
+        int64_t in_off = 0;
+        for (int64_t i = 0; i < ndim; ++i) {
+            in_off += in_coord[i] * in_strides[i];
+        }
+        o_p[flat] = in_p[in_off];
+    }
+    return out;
 }
 
 void register_cuda_add(BinaryOpFn fn) { g_add_fn = fn; }
@@ -562,5 +613,6 @@ void register_log_wirer(AutogradUnaryWirerFn fn) { g_wire_log = fn; }
 void register_softmax_wirer(AutogradSoftmaxWirerFn fn) { g_wire_softmax = fn; }
 void register_log_softmax_wirer(AutogradSoftmaxWirerFn fn) { g_wire_log_softmax = fn; }
 void register_layernorm_wirer(AutogradLayerNormWirerFn fn) { g_wire_layernorm = fn; }
+void register_sum_wirer(AutogradReduceWirerFn fn) { g_wire_sum = fn; }
 
 } // namespace tensorforge

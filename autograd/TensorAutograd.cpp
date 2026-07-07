@@ -9,6 +9,7 @@
 #include "autograd/ops/MulBackward.hpp"
 #include "autograd/ops/ReluBackward.hpp"
 #include "autograd/ops/SoftmaxBackward.hpp"
+#include "autograd/ops/SumBackward.hpp"
 #include "tensor/AutogradWirer.hpp"
 
 #include <memory>
@@ -51,8 +52,13 @@ void Tensor::backward() {
     if (!autograd_meta_ || !autograd_meta_->grad_fn_) {
         throw std::runtime_error("backward() called on tensor without grad_fn");
     }
-    Tensor grad = Tensor::empty(shape(), dtype(), device());
-    if (dtype() == Dtype::Float32) {
+    Tensor grad;
+    if (shape_.numel() == 0) {
+        grad = Tensor::empty(Shape{1}, dtype(), device());
+    } else {
+        grad = Tensor::empty(shape(), dtype(), device());
+    }
+    if (dtype() == Dtype::Float32 && grad.numel() > 0) {
         float* ptr = static_cast<float*>(grad.data());
         for (int64_t i = 0; i < grad.numel(); ++i) {
             ptr[i] = 1.0f;
@@ -118,7 +124,9 @@ void wire_matmul(Tensor& out, const Tensor& a, const Tensor& b) {
 }
 
 // Build a backward node and wire it onto `out`. Pulled into a helper so
-// every unary wirer is one line long.
+// every unary wirer is one line long. Chaining prefers x's grad_fn
+// (so a stack like relu(matmul(a, b)) reaches the MatmulBackward) and
+// falls back to x's grad_accumulator when x is a leaf.
 template <typename BackwardT>
 void wire_unary_helper(Tensor& out, const Tensor& x) {
     if (!x.requires_grad()) {
@@ -127,9 +135,11 @@ void wire_unary_helper(Tensor& out, const Tensor& x) {
     out.requires_grad(true);
     auto grad_fn = std::make_shared<BackwardT>(x);
     out.autograd_meta()->grad_fn_ = grad_fn;
-    grad_fn->next_edges_ = {
-        Edge(x.autograd_meta() ? x.autograd_meta()->grad_accumulator_ : nullptr, 0)
-    };
+    NodePtr<Node> source = x.autograd_meta() && x.autograd_meta()->grad_fn_
+        ? std::static_pointer_cast<Node>(x.autograd_meta()->grad_fn_)
+        : (x.autograd_meta() ? std::static_pointer_cast<Node>(x.autograd_meta()->grad_accumulator_)
+                             : nullptr);
+    grad_fn->next_edges_ = {Edge(source, 0)};
     chain_to_grad_fn(out, grad_fn);
 }
 
@@ -238,6 +248,23 @@ void wire_layernorm(Tensor& out, const Tensor& x, const Tensor& gamma,
     chain_to_grad_fn(out, grad_fn);
 }
 
+void wire_sum(Tensor& out, const Tensor& x, int64_t dim, bool keepdim) {
+    (void)dim;
+    (void)keepdim;
+    if (!x.requires_grad()) {
+        return;
+    }
+    out.requires_grad(true);
+    auto grad_fn = std::make_shared<SumBackward>(x);
+    out.autograd_meta()->grad_fn_ = grad_fn;
+    NodePtr<Node> source = x.autograd_meta() && x.autograd_meta()->grad_fn_
+        ? std::static_pointer_cast<Node>(x.autograd_meta()->grad_fn_)
+        : (x.autograd_meta() ? std::static_pointer_cast<Node>(x.autograd_meta()->grad_accumulator_)
+                             : nullptr);
+    grad_fn->next_edges_ = {Edge(source, 0)};
+    chain_to_grad_fn(out, grad_fn);
+}
+
 struct WirerRegistrar {
     WirerRegistrar() {
         register_add_wirer(&wire_add);
@@ -251,6 +278,7 @@ struct WirerRegistrar {
         register_softmax_wirer(&wire_softmax);
         register_log_softmax_wirer(&wire_log_softmax);
         register_layernorm_wirer(&wire_layernorm);
+        register_sum_wirer(&wire_sum);
     }
 };
 

@@ -14,7 +14,7 @@ class Stride {
 public:
     Stride() = default;
 
-    constexpr Stride(std::initializer_list<int64_t> strides) : strides_(strides) {}
+    Stride(std::initializer_list<int64_t> strides) : strides_(strides) {}
 
     explicit Stride(std::vector<int64_t> strides) : strides_(std::move(strides)) {}
 

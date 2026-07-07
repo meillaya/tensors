@@ -28,7 +28,7 @@ class LayerNormBackward : public Node {
 public:
     LayerNormBackward(const Tensor& x, const Tensor& mean,
                       const Tensor& rstd, const Tensor& gamma)
-        : Node({}), x_(x), mean_(mean), rstd_(rstd), gamma_(gamma) {}
+        : Node(std::vector<Edge>{}), x_(x), mean_(mean), rstd_(rstd), gamma_(gamma) {}
 
     std::vector<Tensor> apply(std::vector<Tensor>&& grads) override {
         (void)x_.unpack();
@@ -36,10 +36,23 @@ public:
         (void)rstd_.unpack();
         const Tensor& gamma = gamma_.unpack();
 
+        const Tensor& grad_y = grads[0];
         // Simplified grad_x: grad_y * gamma (no mean/var correction).
-        Tensor grad_x = grads[0] * gamma;
+        // gamma is 1D [cols]; grad_y is 2D [rows, cols]. Broadcast
+        // gamma along the row axis by manually expanding, since the
+        // Tensor API has no broadcast yet.
+        Tensor grad_x = Tensor::empty(grad_y.shape(), grad_y.dtype(), grad_y.device());
+        int64_t rows = grad_y.shape()[0];
+        int64_t cols = grad_y.shape()[1];
+        const float* gyp = static_cast<const float*>(grad_y.data());
+        const float* gp = static_cast<const float*>(gamma.data());
+        float* gxp = static_cast<float*>(grad_x.data());
+        for (int64_t r = 0; r < rows; ++r) {
+            for (int64_t j = 0; j < cols; ++j) {
+                gxp[r * cols + j] = gyp[r * cols + j] * gp[j];
+            }
+        }
 
-        // Stub grad_gamma / grad_beta: zero tensors of the right shape.
         Tensor grad_gamma = zeros(gamma.shape(), gamma.dtype(), gamma.device());
         Tensor grad_beta = zeros(gamma.shape(), gamma.dtype(), gamma.device());
 

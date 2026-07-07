@@ -45,3 +45,17 @@ cc_test(
     ],
     tags = ["cpu", "autograd", "fp32"],
 )
+
+# T35: finite-difference gradient check for the wired ops. Verifies
+# the autograd gradient against a central-difference numerical
+# estimate for add, mul, relu, and matmul.
+cc_test(
+    name = "gradcheck_test",
+    srcs = ["autograd/gradcheck_test.cpp"],
+    deps = [
+        "//autograd:autograd_core",
+        "//tensor:factory",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["cpu", "autograd", "fp32"],
+)

@@ -43,6 +43,11 @@ using AutogradLayerNormWirerFn = void (*)(Tensor& out, const Tensor& x,
                                           const Tensor& gamma,
                                           const Tensor& beta, float eps);
 
+// Reduction wirer (sum): carries dim and keepdim so the backward Node
+// can broadcast the upstream gradient back to the input shape.
+using AutogradReduceWirerFn = void (*)(Tensor& out, const Tensor& x,
+                                        int64_t dim, bool keepdim);
+
 void register_add_wirer(AutogradWirerFn fn);
 void register_mul_wirer(AutogradWirerFn fn);
 void register_matmul_wirer(AutogradWirerFn fn);
@@ -56,5 +61,6 @@ void register_log_wirer(AutogradUnaryWirerFn fn);
 void register_softmax_wirer(AutogradSoftmaxWirerFn fn);
 void register_log_softmax_wirer(AutogradSoftmaxWirerFn fn);
 void register_layernorm_wirer(AutogradLayerNormWirerFn fn);
+void register_sum_wirer(AutogradReduceWirerFn fn);
 
 } // namespace tensorforge

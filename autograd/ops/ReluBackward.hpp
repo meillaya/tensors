@@ -17,7 +17,7 @@ namespace tensorforge {
 class ReluBackward : public Node {
 public:
     explicit ReluBackward(const Tensor& input)
-        : Node({}), input_(input) {}
+        : Node(std::vector<Edge>{}), input_(input) {}
 
     std::vector<Tensor> apply(std::vector<Tensor>&& grads) override {
         const Tensor& x = input_.unpack();

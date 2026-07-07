@@ -18,29 +18,29 @@ cc_library(
         "IntrusivePtr.hpp",
         "Node.hpp",
         "SavedTensor.hpp",
-        "ops/AddBackward.hpp",
-        "ops/LayerNormBackward.hpp",
-        "ops/MatmulBackward.hpp",
-        "ops/MulBackward.hpp",
-        "ops/ReluBackward.hpp",
-        "ops/SoftmaxBackward.hpp",
     ],
     visibility = ["//visibility:public"],
     deps = [
+        ":ops",
         "//tensor:factory",
         "//tensor:tensor_core",
     ],
 )
 
-# T33: header-only library of autograd backward Nodes.
-# Each operation's gradient is implemented as an inline class deriving from
-# autograd::Node, so consumers (operators, modules) can include just the
-# header they need without pulling the full autograd_core binary.
+# T33: header-only library of autograd backward Nodes. Each operation's
+# gradient is implemented as an inline class deriving from autograd::Node,
+# so consumers can include just the header they need without pulling in
+# the full autograd_core binary.
+#
+# Intentionally does NOT depend on autograd_core: that would create a
+# build dependency cycle (autograd_core -> ops -> autograd_core). The
+# Node / SavedTensor / Tensor headers are picked up via the include path
+# propagated by autograd_core's hdrs, which every consumer of ops also
+# pulls in.
 cc_library(
     name = "ops",
     hdrs = glob(["ops/*.hpp"]),
     visibility = ["//visibility:public"],
-    deps = [":autograd_core"],
 )
 
 cc_test(
@@ -68,6 +68,21 @@ cc_test(
 cc_test(
     name = "autograd_add_mul_test",
     srcs = ["ops/autograd_add_mul_test.cpp"],
+    deps = [
+        ":autograd_core",
+        ":ops",
+        "//tensor:factory",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["cpu", "autograd", "fp32"],
+)
+
+# T34: All-ops backward tests for relu, softmax, layernorm, matmul.
+# Verifies the autograd wiring from Tensor::relu/sigmoid/tanh/softmax/
+# log_softmax/layer_norm/matmul end-to-end via the wirer slot + Engine.
+cc_test(
+    name = "autograd_all_ops_test",
+    srcs = ["ops/autograd_all_ops_test.cpp"],
     deps = [
         ":autograd_core",
         ":ops",

@@ -21,15 +21,15 @@ namespace tensorforge {
 class MatmulBackward : public Node {
 public:
     MatmulBackward(const Tensor& a, const Tensor& b)
-        : Node({}), a_(a), b_(b) {}
+        : Node(std::vector<Edge>{}), a_(a), b_(b) {}
 
     std::vector<Tensor> apply(std::vector<Tensor>&& grads) override {
         const Tensor& a = a_.unpack();
         const Tensor& b = b_.unpack();
         Tensor b_t = b.transpose(-1, -2);
         Tensor a_t = a.transpose(-1, -2);
-        Tensor ga = grads[0] * b_t;
-        Tensor gb = a_t * grads[0];
+        Tensor ga = grads[0].matmul(b_t);
+        Tensor gb = a_t.matmul(grads[0]);
         return {std::move(ga), std::move(gb)};
     }
 
