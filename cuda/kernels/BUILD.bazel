@@ -89,3 +89,29 @@ cc_test(
     ],
     tags = ["gpu", "fp32", "fp16"],
 )
+
+# Layer-norm (T21) — row-wise 2-pass with FP32 accumulator.
+cuda_library(
+    name = "layernorm",
+    srcs = ["layernorm.cu"],
+    hdrs = ["layernorm.cuh"],
+    deps = [
+        "//cuda:context",
+        "//tensor:tensor_types",
+    ],
+)
+
+cc_test(
+    name = "layernorm_test",
+    srcs = ["layernorm_test.cpp"],
+    deps = [
+        ":layernorm",
+        "//cuda:context",
+        "//cuda/memory:allocator",
+        "//tensor:factory",
+        "//tensor:tensor_core",
+        "//tensor:tensor_types",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["gpu", "fp32", "fp16"],
+)
