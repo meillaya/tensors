@@ -48,6 +48,11 @@ using AutogradLayerNormWirerFn = void (*)(Tensor& out, const Tensor& x,
 using AutogradReduceWirerFn = void (*)(Tensor& out, const Tensor& x,
                                         int64_t dim, bool keepdim);
 
+// Transpose wirer: carries the two swapped dims so the backward Node
+// can transpose the upstream gradient back along the same axes.
+using AutogradTransposeWirerFn = void (*)(Tensor& out, const Tensor& x,
+                                          int64_t dim0, int64_t dim1);
+
 void register_add_wirer(AutogradWirerFn fn);
 void register_mul_wirer(AutogradWirerFn fn);
 void register_matmul_wirer(AutogradWirerFn fn);
@@ -62,6 +67,7 @@ void register_softmax_wirer(AutogradSoftmaxWirerFn fn);
 void register_log_softmax_wirer(AutogradSoftmaxWirerFn fn);
 void register_layernorm_wirer(AutogradLayerNormWirerFn fn);
 void register_sum_wirer(AutogradReduceWirerFn fn);
+void register_transpose_wirer(AutogradTransposeWirerFn fn);
 
 // Idempotent toggle that registers all of the above wirers at once.
 // Examples / tests should call this from main() so the registrar

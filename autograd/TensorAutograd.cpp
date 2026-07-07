@@ -10,6 +10,7 @@
 #include "autograd/ops/ReluBackward.hpp"
 #include "autograd/ops/SoftmaxBackward.hpp"
 #include "autograd/ops/SumBackward.hpp"
+#include "autograd/ops/TransposeBackward.hpp"
 #include "tensor/AutogradWirer.hpp"
 
 #include <memory>
@@ -31,7 +32,7 @@ void Tensor::requires_grad(bool req) {
         autograd_meta_ = std::make_shared<AutogradMeta>();
     }
     autograd_meta_->requires_grad_ = req;
-    if (req) {
+    if (req && !autograd_meta_->grad_accumulator_) {
         auto acc = std::make_shared<AccumulateGrad>(autograd_meta_);
         autograd_meta_->grad_accumulator_ = acc;
     }
@@ -265,6 +266,21 @@ void wire_sum(Tensor& out, const Tensor& x, int64_t dim, bool keepdim) {
     chain_to_grad_fn(out, grad_fn);
 }
 
+void wire_transpose(Tensor& out, const Tensor& x, int64_t dim0, int64_t dim1) {
+    if (!x.requires_grad()) {
+        return;
+    }
+    out.requires_grad(true);
+    auto grad_fn = std::make_shared<TransposeBackward>(dim0, dim1);
+    out.autograd_meta()->grad_fn_ = grad_fn;
+    NodePtr<Node> source = x.autograd_meta() && x.autograd_meta()->grad_fn_
+        ? std::static_pointer_cast<Node>(x.autograd_meta()->grad_fn_)
+        : (x.autograd_meta() ? std::static_pointer_cast<Node>(x.autograd_meta()->grad_accumulator_)
+                             : nullptr);
+    grad_fn->next_edges_ = {Edge(source, 0)};
+    chain_to_grad_fn(out, grad_fn);
+}
+
 struct WirerRegistrar {
     WirerRegistrar() {
         register_add_wirer(&wire_add);
@@ -279,6 +295,7 @@ struct WirerRegistrar {
         register_log_softmax_wirer(&wire_log_softmax);
         register_layernorm_wirer(&wire_layernorm);
         register_sum_wirer(&wire_sum);
+        register_transpose_wirer(&wire_transpose);
     }
 };
 
@@ -312,6 +329,7 @@ void init_tensor_autograd() {
     register_log_softmax_wirer(&wire_log_softmax);
     register_layernorm_wirer(&wire_layernorm);
     register_sum_wirer(&wire_sum);
+    register_transpose_wirer(&wire_transpose);
 }
 
 }  // namespace tensorforge

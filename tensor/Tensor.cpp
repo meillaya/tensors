@@ -90,6 +90,7 @@ AutogradSoftmaxWirerFn g_wire_softmax = nullptr;
 AutogradSoftmaxWirerFn g_wire_log_softmax = nullptr;
 AutogradLayerNormWirerFn g_wire_layernorm = nullptr;
 AutogradReduceWirerFn g_wire_sum = nullptr;
+AutogradTransposeWirerFn g_wire_transpose = nullptr;
 
 } // namespace
 
@@ -232,20 +233,18 @@ Tensor Tensor::relu() const {
         for (int64_t i = 0; i < numel(); ++i) {
             out_p[i] = in_p[i] > 0.0f ? in_p[i] : 0.0f;
         }
-        if (g_wire_relu != nullptr) {
-            g_wire_relu(out, *this);
+    } else {
+        auto fn = g_relu_fn;
+        if (fn == nullptr) {
+            throw std::runtime_error("CUDA relu kernel not registered");
         }
-        return out;
+        fn(this->data(), out.data(), numel(), dtype(), g_current_stream);
     }
 
-    auto fn = g_relu_fn;
-    if (fn == nullptr) {
-        throw std::runtime_error("CUDA relu kernel not registered");
-    }
-    fn(this->data(), out.data(), numel(), dtype(), g_current_stream);
     if (g_wire_relu != nullptr) {
         g_wire_relu(out, *this);
     }
+
     return out;
 }
 
@@ -364,6 +363,7 @@ Tensor Tensor::matmul(const Tensor& other) const {
     if (g_wire_matmul != nullptr) {
         g_wire_matmul(out, *this, other);
     }
+
     return out;
 }
 
@@ -404,6 +404,7 @@ Tensor Tensor::softmax(int64_t dim) const {
     if (g_wire_softmax != nullptr) {
         g_wire_softmax(out, *this, dim);
     }
+
     return out;
 }
 
@@ -441,6 +442,7 @@ Tensor Tensor::log_softmax(int64_t dim) const {
     if (g_wire_log_softmax != nullptr) {
         g_wire_log_softmax(out, *this, dim);
     }
+
     return out;
 }
 
@@ -487,6 +489,7 @@ Tensor Tensor::layer_norm(const Tensor& gamma, const Tensor& beta, float eps) co
     if (g_wire_layernorm != nullptr) {
         g_wire_layernorm(out, *this, gamma, beta, eps);
     }
+
     return out;
 }
 
@@ -553,6 +556,7 @@ Tensor Tensor::sum(int64_t dim, bool keepdim) const {
     if (g_wire_sum != nullptr) {
         g_wire_sum(out, *this, dim, keepdim);
     }
+
     return out;
 }
 
@@ -606,6 +610,11 @@ Tensor Tensor::transpose(int64_t dim0, int64_t dim1) const {
         }
         o_p[flat] = in_p[in_off];
     }
+
+    if (g_wire_transpose != nullptr) {
+        g_wire_transpose(out, *this, dim0, dim1);
+    }
+
     return out;
 }
 
@@ -630,5 +639,6 @@ void register_softmax_wirer(AutogradSoftmaxWirerFn fn) { g_wire_softmax = fn; }
 void register_log_softmax_wirer(AutogradSoftmaxWirerFn fn) { g_wire_log_softmax = fn; }
 void register_layernorm_wirer(AutogradLayerNormWirerFn fn) { g_wire_layernorm = fn; }
 void register_sum_wirer(AutogradReduceWirerFn fn) { g_wire_sum = fn; }
+void register_transpose_wirer(AutogradTransposeWirerFn fn) { g_wire_transpose = fn; }
 
 } // namespace tensorforge
