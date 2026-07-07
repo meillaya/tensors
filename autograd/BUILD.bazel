@@ -4,7 +4,6 @@ cc_library(
     name = "autograd_core",
     srcs = [
         "AccumulateGrad.cpp",
-        "AddBackward.cpp",
         "AutogradMeta.cpp",
         "Engine.cpp",
         "InputBuffer.cpp",
@@ -13,17 +12,28 @@ cc_library(
     ],
     hdrs = [
         "AccumulateGrad.hpp",
-        "AddBackward.hpp",
         "AutogradMeta.hpp",
         "Engine.hpp",
         "InputBuffer.hpp",
         "IntrusivePtr.hpp",
         "Node.hpp",
         "SavedTensor.hpp",
+        "ops/AddBackward.hpp",
         "ops/MulBackward.hpp",
     ],
     visibility = ["//visibility:public"],
     deps = ["//tensor:tensor_core"],
+)
+
+# T33: header-only library of autograd backward Nodes.
+# Each operation's gradient is implemented as an inline class deriving from
+# autograd::Node, so consumers (operators, modules) can include just the
+# header they need without pulling the full autograd_core binary.
+cc_library(
+    name = "ops",
+    hdrs = glob(["ops/*.hpp"]),
+    visibility = ["//visibility:public"],
+    deps = [":autograd_core"],
 )
 
 cc_test(
@@ -45,4 +55,17 @@ cc_test(
     srcs = ["engine_test.cpp"],
     deps = [":autograd_core", "//third_party/doctest:doctest"],
     tags = ["cpu"],
+)
+
+# T33: add/mul backward — exercises Tensor::operator+/* wirer slot end-to-end.
+cc_test(
+    name = "autograd_add_mul_test",
+    srcs = ["ops/autograd_add_mul_test.cpp"],
+    deps = [
+        ":autograd_core",
+        ":ops",
+        "//tensor:factory",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["cpu", "autograd", "fp32"],
 )

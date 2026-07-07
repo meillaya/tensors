@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 
-#include "autograd/AddBackward.hpp"
+#include "autograd/ops/AddBackward.hpp"
 #include "autograd/Node.hpp"
 #include "autograd/SavedTensor.hpp"
 #include "tensor/Tensor.hpp"

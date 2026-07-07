@@ -1,9 +1,9 @@
 #include "tensor/Tensor.hpp"
 
 #include "autograd/AccumulateGrad.hpp"
-#include "autograd/AddBackward.hpp"
 #include "autograd/AutogradMeta.hpp"
 #include "autograd/Engine.hpp"
+#include "autograd/ops/AddBackward.hpp"
 #include "autograd/ops/MulBackward.hpp"
 #include "tensor/AutogradWirer.hpp"
 
@@ -64,11 +64,20 @@ void wire_add(Tensor& out, const Tensor& a, const Tensor& b) {
         return;
     }
     out.requires_grad(true);
-    out.autograd_meta()->grad_fn_ = std::make_shared<AddBackward>();
-    out.autograd_meta()->grad_fn_->next_edges_ = {
+    auto grad_fn = std::make_shared<AddBackward>();
+    out.autograd_meta()->grad_fn_ = grad_fn;
+    grad_fn->next_edges_ = {
         Edge(a.autograd_meta() ? a.autograd_meta()->grad_accumulator_ : nullptr, 0),
-        Edge(b.autograd_meta() ? b.autograd_meta()->grad_accumulator_ : nullptr, 1)
+        Edge(b.autograd_meta() ? b.autograd_meta()->grad_accumulator_ : nullptr, 0)
     };
+    // Chain the AccumulateGrad to grad_fn so the engine walks past
+    // intermediate tensors. Without this, d = (a+b)*a leaves a.grad
+    // and b.grad unaccumulated for the (a+b) sub-graph.
+    if (out.autograd_meta()->grad_accumulator_) {
+        out.autograd_meta()->grad_accumulator_->next_edges_ = {
+            Edge(grad_fn, 0)
+        };
+    }
 }
 
 void wire_mul(Tensor& out, const Tensor& a, const Tensor& b) {
@@ -76,11 +85,17 @@ void wire_mul(Tensor& out, const Tensor& a, const Tensor& b) {
         return;
     }
     out.requires_grad(true);
-    out.autograd_meta()->grad_fn_ = std::make_shared<MulBackward>(a, b);
-    out.autograd_meta()->grad_fn_->next_edges_ = {
+    auto grad_fn = std::make_shared<MulBackward>(a, b);
+    out.autograd_meta()->grad_fn_ = grad_fn;
+    grad_fn->next_edges_ = {
         Edge(a.autograd_meta() ? a.autograd_meta()->grad_accumulator_ : nullptr, 0),
-        Edge(b.autograd_meta() ? b.autograd_meta()->grad_accumulator_ : nullptr, 1)
+        Edge(b.autograd_meta() ? b.autograd_meta()->grad_accumulator_ : nullptr, 0)
     };
+    if (out.autograd_meta()->grad_accumulator_) {
+        out.autograd_meta()->grad_accumulator_->next_edges_ = {
+            Edge(grad_fn, 0)
+        };
+    }
 }
 
 struct WirerRegistrar {
