@@ -19,10 +19,17 @@ cc_library(
         "Node.hpp",
         "SavedTensor.hpp",
         "ops/AddBackward.hpp",
+        "ops/LayerNormBackward.hpp",
+        "ops/MatmulBackward.hpp",
         "ops/MulBackward.hpp",
+        "ops/ReluBackward.hpp",
+        "ops/SoftmaxBackward.hpp",
     ],
     visibility = ["//visibility:public"],
-    deps = ["//tensor:tensor_core"],
+    deps = [
+        "//tensor:factory",
+        "//tensor:tensor_core",
+    ],
 )
 
 # T33: header-only library of autograd backward Nodes.

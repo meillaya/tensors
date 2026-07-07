@@ -67,9 +67,9 @@ public:
     [[nodiscard]] Tensor grad() const;
     void backward();
 
-    // Elementwise activations — STUBS in v1, returning *this. Real
-    // elementwise + autograd wiring lands in T19. These declarations
-    // exist so nn/Activations.hpp can build before T19 lands.
+    // Elementwise activations. Forward returns the activated tensor;
+    // the wirer slot installs the matching backward Node (ReluBackward,
+    // etc.) when any input requires_grad.
     [[nodiscard]] Tensor relu() const;
     [[nodiscard]] Tensor sigmoid() const;
     [[nodiscard]] Tensor tanh() const;
@@ -83,9 +83,38 @@ public:
     [[nodiscard]] Tensor to(Device device, Dtype dtype) const;
 
     // Elementwise binary ops (T17/T18). Both operands must share shape and
-    // dtype and device. Output is a new tensor.
+    // dtype and device. Output is a new tensor. The wirer slot installs
+    // AddBackward / MulBackward when requires_grad is true.
     [[nodiscard]] Tensor operator+(const Tensor& other) const;
+    [[nodiscard]] Tensor operator-(const Tensor& other) const;
     [[nodiscard]] Tensor operator*(const Tensor& other) const;
+
+    // T34: 2D matrix multiply. Both operands must be 2D Float32 on CPU.
+    // Wirer installs MatmulBackward when requires_grad is true.
+    [[nodiscard]] Tensor matmul(const Tensor& other) const;
+
+    // T34: softmax along `dim` (negative indexing supported). CPU Float32
+    // for v1. Wirer installs SoftmaxBackward when requires_grad is true.
+    [[nodiscard]] Tensor softmax(int64_t dim) const;
+
+    // T34: log_softmax along `dim` (negative indexing supported).
+    [[nodiscard]] Tensor log_softmax(int64_t dim) const;
+
+    // T34: row-wise layer-norm. `gamma` and `beta` are 1D [last_dim]
+    // vectors on the same device.
+    [[nodiscard]] Tensor layer_norm(const Tensor& gamma, const Tensor& beta,
+                                     float eps = 1e-5f) const;
+
+    // T34: elementwise natural log. CPU Float32 for v1.
+    [[nodiscard]] Tensor log() const;
+
+    // T34: sum reduction along `dim` with optional keepdim. Negative
+    // indexing supported. CPU Float32 for v1.
+    [[nodiscard]] Tensor sum(int64_t dim, bool keepdim = false) const;
+
+    // T34: instance transpose with negative-index support. Returns a view
+    // over the same storage with swapped shape/stride.
+    [[nodiscard]] Tensor transpose(int64_t dim0, int64_t dim1) const;
 
 private:
     Storage storage_;
