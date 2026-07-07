@@ -243,3 +243,21 @@ cuda_library(
         "//tensor:tensor_types",
     ],
 )
+
+# Aggregator alias so callers (examples, tests) can pull the whole
+# library in one dep. Mirror of all kernel targets above.
+cc_library(
+    name = "kernels",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":bias_add",
+        ":col2im",
+        ":elementwise",
+        ":gemm",
+        ":im2col",
+        ":layernorm",
+        ":reduce_sum_axis",
+        ":softmax",
+        ":transpose",
+    ],
+)

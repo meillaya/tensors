@@ -13,3 +13,18 @@ cc_binary(
         "//tensor:factory",
     ],
 )
+
+cc_binary(
+    name = "train_cnn",
+    srcs = ["train_cnn.cpp"],
+    deps = [
+        "//data:cifar",
+        "//nn:conv2d_module",
+        "//nn:linear",
+        "//nn:activations",
+        "//nn:cross_entropy_loss",
+        "//nn/optim:optim",
+        "//tensor:tensor_core",
+        "//tensor:factory",
+    ],
+)
