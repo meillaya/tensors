@@ -45,3 +45,56 @@ cc_test(
     ],
     tags = ["cpu"],
 )
+# Conv2d (T27/T28) — im2col + GEMM forward; col2im + grad GEMMs in T28.
+cc_library(
+    name = "conv2d",
+    srcs = ["Conv2d.cpp"],
+    hdrs = ["Conv2d.hpp"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":module",
+        "//cuda:context",
+        "//cuda/kernels:bias_add",
+        "//cuda/kernels:gemm",
+        "//cuda/kernels:im2col",
+        "//tensor:factory",
+        "//tensor:tensor_core",
+    ],
+)
+
+cc_test(
+    name = "conv2d_forward_test",
+    srcs = ["conv2d_forward_test.cpp"],
+    deps = [
+        ":conv2d",
+        "//cuda:context",
+        "//cuda/kernels:bias_add",
+        "//cuda/kernels:gemm",
+        "//cuda/kernels:im2col",
+        "//cuda/memory:allocator",
+        "//tensor:factory",
+        "//tensor:tensor_core",
+        "//tensor:tensor_types",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["gpu", "fp32"],
+)
+
+cc_test(
+    name = "conv2d_backward_test",
+    srcs = ["conv2d_backward_test.cpp"],
+    deps = [
+        ":conv2d",
+        "//cuda:context",
+        "//cuda/kernels:bias_add",
+        "//cuda/kernels:col2im",
+        "//cuda/kernels:gemm",
+        "//cuda/kernels:im2col",
+        "//cuda/memory:allocator",
+        "//tensor:factory",
+        "//tensor:tensor_core",
+        "//tensor:tensor_types",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["gpu", "fp32"],
+)

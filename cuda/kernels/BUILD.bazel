@@ -199,3 +199,14 @@ cc_test(
     ],
     tags = ["gpu", "fp32", "fp16", "bf16"],
 )
+
+# bias_add (T27) — in-place per-channel bias broadcast for Conv2d et al.
+cuda_library(
+    name = "bias_add",
+    srcs = ["bias_add.cu"],
+    hdrs = ["bias_add.cuh"],
+    deps = [
+        "//cuda:context",
+        "//tensor:tensor_types",
+    ],
+)
