@@ -173,3 +173,29 @@ cc_test(
     ],
     tags = ["gpu", "fp32", "fp16", "bf16", "perf"],
 )
+
+# im2col (T26) — one thread per output element of the column matrix.
+cuda_library(
+    name = "im2col",
+    srcs = ["im2col.cu"],
+    hdrs = ["im2col.cuh"],
+    deps = [
+        "//cuda:context",
+        "//tensor:tensor_types",
+    ],
+)
+
+cc_test(
+    name = "im2col_test",
+    srcs = ["im2col_test.cpp"],
+    deps = [
+        ":im2col",
+        "//cuda:context",
+        "//cuda/memory:allocator",
+        "//tensor:factory",
+        "//tensor:tensor_core",
+        "//tensor:tensor_types",
+        "//third_party/doctest:doctest",
+    ],
+    tags = ["gpu", "fp32", "fp16", "bf16"],
+)
