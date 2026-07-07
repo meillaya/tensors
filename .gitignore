@@ -42,3 +42,7 @@ public_key.pem
 # Internal / evidence (not for the public repo)
 .omo/
 .run/
+
+# Profiling artifacts (rebuilt by scripts in docs/profiling/README.md)
+*.nsys-rep
+*.ncu-rep

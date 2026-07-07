@@ -1,0 +1,128 @@
+[op_bench] GPU=H100 (SMs=132), stream=non-null
+[op_bench] warmup=3 iters=20 dtype=float32
+[op_bench] add n=1024  us=5.28  bw=2.32727 GB/s
+[op_bench] mul n=1024  us=5.12  bw=2.4 GB/s
+[op_bench] add n=65536  us=5.504  bw=142.884 GB/s
+[op_bench] mul n=65536  us=5.376  bw=146.286 GB/s
+[op_bench] add n=262144  us=6.176  bw=509.347 GB/s
+[op_bench] mul n=262144  us=6.08  bw=517.389 GB/s
+[op_bench] add n=4194304  us=25.632  bw=1963.63 GB/s
+[op_bench] mul n=4194304  us=25.6  bw=1966.08 GB/s
+[op_bench] add n=16777216  us=85.792  bw=2346.68 GB/s
+[op_bench] mul n=16777216  us=85.728  bw=2348.43 GB/s
+[op_bench] relu n=1024  us=5.184  bw=1.58025 GB/s
+[op_bench] sigmoid n=1024  us=5.312  bw=1.54217 GB/s
+[op_bench] tanh n=1024  us=5.152  bw=1.59006 GB/s
+[op_bench] relu n=65536  us=5.472  bw=95.8129 GB/s
+[op_bench] sigmoid n=65536  us=5.504  bw=95.2558 GB/s
+[op_bench] tanh n=65536  us=5.376  bw=97.5238 GB/s
+[op_bench] relu n=262144  us=6.016  bw=348.596 GB/s
+[op_bench] sigmoid n=262144  us=6.176  bw=339.565 GB/s
+[op_bench] tanh n=262144  us=6.176  bw=339.565 GB/s
+[op_bench] relu n=4194304  us=20.288  bw=1653.91 GB/s
+[op_bench] sigmoid n=4194304  us=22.72  bw=1476.87 GB/s
+[op_bench] tanh n=4194304  us=22.368  bw=1500.11 GB/s
+[op_bench] relu n=16777216  us=76.736  bw=1749.08 GB/s
+[op_bench] sigmoid n=16777216  us=83.936  bw=1599.05 GB/s
+[op_bench] tanh n=16777216  us=81.856  bw=1639.68 GB/s
+[op_bench] matmul n=128  us=9.728  tflops=0.431158
+[op_bench] matmul n=256  us=15.456  tflops=2.17096
+[op_bench] matmul n=512  us=57.024  tflops=4.70741
+[op_bench] matmul n=1024  us=373.888  tflops=5.74366
+[op_bench] matmul n=2048  us=2818.21  tflops=6.09603
+[op_bench] softmax rows=1 cols=1024  us=6.656  bw=1.23077 GB/s
+[op_bench] softmax rows=32 cols=1024  us=6.752  bw=38.8246 GB/s
+[op_bench] softmax rows=128 cols=1024  us=6.784  bw=154.566 GB/s
+[op_bench] softmax rows=1024 cols=1024  us=8.96  bw=936.229 GB/s
+[op_bench] softmax rows=4096 cols=1024  us=19.488  bw=1721.8 GB/s
+[op_bench] layernorm rows=1 cols=1024  us=6.816  bw=2.40376 GB/s
+[op_bench] layernorm rows=32 cols=1024  us=7.008  bw=38.5753 GB/s
+[op_bench] layernorm rows=128 cols=1024  us=7.072  bw=149.43 GB/s
+[op_bench] layernorm rows=1024 cols=1024  us=8.384  bw=1001.53 GB/s
+[op_bench] Wrote /data/tensorforge/benchmarks/results/op_bench_profiled.json (4011 bytes, 39 entries)
+Generating '/tmp/nsys-report-3dbd.qdstrm'
+[1/8] [0%                          ] op_timeline.nsys-rep[1/8] [0%                          ] op_timeline.nsys-rep[1/8] [9%                          ] op_timeline.nsys-rep[1/8] [10%                         ] op_timeline.nsys-rep[1/8] [11%                         ] op_timeline.nsys-rep[1/8] [==19%                       ] op_timeline.nsys-rep[1/8] [==20%                       ] op_timeline.nsys-rep[1/8] [===23%                      ] op_timeline.nsys-rep[1/8] [======================91%   ] op_timeline.nsys-rep[1/8] [========================100%] op_timeline.nsys-rep[1/8] [========================100%] op_timeline.nsys-rep
+[2/8] [0%                          ] op_timeline.sqlite[2/8] [1%                          ] op_timeline.sqlite[2/8] [2%                          ] op_timeline.sqlite[2/8] [3%                          ] op_timeline.sqlite[2/8] [4%                          ] op_timeline.sqlite[2/8] [5%                          ] op_timeline.sqlite[2/8] [6%                          ] op_timeline.sqlite[2/8] [7%                          ] op_timeline.sqlite[2/8] [8%                          ] op_timeline.sqlite[2/8] [9%                          ] op_timeline.sqlite[2/8] [10%                         ] op_timeline.sqlite[2/8] [11%                         ] op_timeline.sqlite[2/8] [12%                         ] op_timeline.sqlite[2/8] [13%                         ] op_timeline.sqlite[2/8] [14%                         ] op_timeline.sqlite[2/8] [=15%                        ] op_timeline.sqlite[2/8] [=16%                        ] op_timeline.sqlite[2/8] [=17%                        ] op_timeline.sqlite[2/8] [==18%                       ] op_timeline.sqlite[2/8] [==19%                       ] op_timeline.sqlite[2/8] [==20%                       ] op_timeline.sqlite[2/8] [==21%                       ] op_timeline.sqlite[2/8] [===22%                      ] op_timeline.sqlite[2/8] [===23%                      ] op_timeline.sqlite[2/8] [===24%                      ] op_timeline.sqlite[2/8] [====25%                     ] op_timeline.sqlite[2/8] [====26%                     ] op_timeline.sqlite[2/8] [====27%                     ] op_timeline.sqlite[2/8] [====28%                     ] op_timeline.sqlite[2/8] [=====29%                    ] op_timeline.sqlite[2/8] [=====30%                    ] op_timeline.sqlite[2/8] [=====31%                    ] op_timeline.sqlite[2/8] [=====32%                    ] op_timeline.sqlite[2/8] [======33%                   ] op_timeline.sqlite[2/8] [======34%                   ] op_timeline.sqlite[2/8] [======35%                   ] op_timeline.sqlite[2/8] [=======36%                  ] op_timeline.sqlite[2/8] [=======37%                  ] op_timeline.sqlite[2/8] [=======38%                  ] op_timeline.sqlite[2/8] [=======39%                  ] op_timeline.sqlite[2/8] [========40%                 ] op_timeline.sqlite[2/8] [========41%                 ] op_timeline.sqlite[2/8] [========42%                 ] op_timeline.sqlite[2/8] [=========43%                ] op_timeline.sqlite[2/8] [=========44%                ] op_timeline.sqlite[2/8] [=========45%                ] op_timeline.sqlite[2/8] [=========46%                ] op_timeline.sqlite[2/8] [==========47%               ] op_timeline.sqlite[2/8] [==========48%               ] op_timeline.sqlite[2/8] [==========49%               ] op_timeline.sqlite[2/8] [===========50%              ] op_timeline.sqlite[2/8] [===========51%              ] op_timeline.sqlite[2/8] [===========52%              ] op_timeline.sqlite[2/8] [===========53%              ] op_timeline.sqlite[2/8] [============54%             ] op_timeline.sqlite[2/8] [============55%             ] op_timeline.sqlite[2/8] [============56%             ] op_timeline.sqlite[2/8] [============57%             ] op_timeline.sqlite[2/8] [=============58%            ] op_timeline.sqlite[2/8] [=============59%            ] op_timeline.sqlite[2/8] [=============60%            ] op_timeline.sqlite[2/8] [==============61%           ] op_timeline.sqlite[2/8] [==============62%           ] op_timeline.sqlite[2/8] [==============63%           ] op_timeline.sqlite[2/8] [==============64%           ] op_timeline.sqlite[2/8] [===============65%          ] op_timeline.sqlite[2/8] [===============66%          ] op_timeline.sqlite[2/8] [===============67%          ] op_timeline.sqlite[2/8] [================68%         ] op_timeline.sqlite[2/8] [================69%         ] op_timeline.sqlite[2/8] [================70%         ] op_timeline.sqlite[2/8] [================71%         ] op_timeline.sqlite[2/8] [=================72%        ] op_timeline.sqlite[2/8] [=================73%        ] op_timeline.sqlite[2/8] [=================74%        ] op_timeline.sqlite[2/8] [==================75%       ] op_timeline.sqlite[2/8] [==================76%       ] op_timeline.sqlite[2/8] [==================77%       ] op_timeline.sqlite[2/8] [==================78%       ] op_timeline.sqlite[2/8] [===================79%      ] op_timeline.sqlite[2/8] [===================80%      ] op_timeline.sqlite[2/8] [===================81%      ] op_timeline.sqlite[2/8] [===================82%      ] op_timeline.sqlite[2/8] [====================83%     ] op_timeline.sqlite[2/8] [====================84%     ] op_timeline.sqlite[2/8] [====================85%     ] op_timeline.sqlite[2/8] [=====================86%    ] op_timeline.sqlite[2/8] [=====================87%    ] op_timeline.sqlite[2/8] [=====================88%    ] op_timeline.sqlite[2/8] [=====================89%    ] op_timeline.sqlite[2/8] [======================90%   ] op_timeline.sqlite[2/8] [======================91%   ] op_timeline.sqlite[2/8] [======================92%   ] op_timeline.sqlite[2/8] [=======================93%  ] op_timeline.sqlite[2/8] [=======================94%  ] op_timeline.sqlite[2/8] [=======================95%  ] op_timeline.sqlite[2/8] [=======================96%  ] op_timeline.sqlite[2/8] [========================97% ] op_timeline.sqlite[2/8] [========================98% ] op_timeline.sqlite[2/8] [========================99% ] op_timeline.sqlite[2/8] [========================100%] op_timeline.sqlite[2/8] [========================100%] op_timeline.sqlite
+SKIPPED: /data/tensorforge/docs/profiling/op_timeline.sqlite does not contain NV Tools Extension (NVTX) data.
+[3/8] Executing 'nvtx_sum' stats report
+[4/8] Executing 'osrt_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)    Med (ns)   Min (ns)  Max (ns)   StdDev (ns)           Name         
+ --------  ---------------  ---------  ----------  ----------  --------  ---------  -----------  ----------------------
+     80.1        680338074         16  42521129.6  10161000.0      3365  279717439   74020043.5  poll                  
+     15.2        128966378        589    218958.2     13300.0       751   10550164     721075.1  ioctl                 
+      4.0         33737074          1  33737074.0  33737074.0  33737074   33737074          0.0  system                
+      0.4          3416153         31    110198.5      6780.0      3635    2477468     442764.0  mmap64                
+      0.1           819452         10     81945.2     77076.0     58668     140051      26187.3  sem_timedwait         
+      0.1           508791        312      1630.7       846.5       752      11637       2087.3  fwrite                
+      0.0           273917         50      5478.3      4802.0      2524      10706       1784.7  open64                
+      0.0           216745          1    216745.0    216745.0    216745     216745          0.0  pthread_cond_wait     
+      0.0           200712          2    100356.0    100356.0     67131     133581      46987.2  pthread_create        
+      0.0           186892         14     13349.4      5333.5      1843     115263      29487.2  mmap                  
+      0.0           184782         27      6843.8      4347.0      1713      24567       6045.3  fopen                 
+      0.0           124488         24      5187.0      2038.0      1162      61492      12114.7  fclose                
+      0.0            82401         47      1753.2        40.0        30      80651      11758.6  fgets                 
+      0.0            71556         12      5963.0      6119.0      1382       9314       2354.6  write                 
+      0.0            51297          1     51297.0     51297.0     51297      51297          0.0  fopen64               
+      0.0            43306          6      7217.7      4567.0      2314      19169       6288.0  open                  
+      0.0            41525         65       638.8       591.0       441       1472        198.6  fcntl                 
+      0.0            34713         15      2314.2      1733.0      1282       4647       1141.5  read                  
+      0.0            27355        632        43.3        30.0        30        761         59.8  fflush                
+      0.0            20521          2     10260.5     10260.5      8423      12098       2598.6  fread                 
+      0.0            18649          3      6216.3      5979.0      4457       8213       1889.2  pipe2                 
+      0.0            17286          2      8643.0      8643.0      3265      14021       7605.6  pthread_cond_broadcast
+      0.0            15243          1     15243.0     15243.0     15243      15243          0.0  writev                
+      0.0            15082          3      5027.3      4506.0      3405       7171       1936.4  munmap                
+      0.0            12960          2      6480.0      6480.0      4567       8393       2705.4  socket                
+      0.0             9304          1      9304.0      9304.0      9304       9304          0.0  connect               
+      0.0             4196          8       524.5       536.0       461        581         40.5  dup                   
+      0.0             1773          1      1773.0      1773.0      1773       1773          0.0  bind                  
+      0.0              902          1       902.0       902.0       902        902          0.0  listen                
+
+[5/8] Executing 'cuda_api_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)     Med (ns)    Min (ns)   Max (ns)   StdDev (ns)                 Name               
+ --------  ---------------  ---------  -----------  -----------  ---------  ---------  -----------  ----------------------------------
+     48.4        116205355          1  116205355.0  116205355.0  116205355  116205355          0.0  cudaStreamCreateWithFlags         
+     32.8         78705363        780     100904.3       5858.5       3585    2821644     445013.5  cudaEventSynchronize              
+      7.2         17213425         42     409843.5      22614.0       2544    3781756     973030.6  cudaMemcpyAsync                   
+      4.9         11657608         63     185041.4       8062.0       1132    8445916    1068116.2  cudaStreamSynchronize             
+      3.3          8022052         66     121546.2       3270.0        862    6080105     747337.1  cudaMallocAsync_v11020            
+      1.6          3842302        897       4283.5       2644.0       2344     401603      17777.9  cudaLaunchKernel                  
+      1.0          2396124       1560       1536.0       1472.0       1182      27311       1373.0  cudaEventRecord                   
+      0.6          1498979          1    1498979.0    1498979.0    1498979    1498979          0.0  cudaGetDeviceProperties_v2_v12000 
+      0.1           193310          1     193310.0     193310.0     193310     193310          0.0  cudaDeviceGetDefaultMemPool_v11020
+      0.0            91082         78       1167.7        621.0        381       5949       1215.6  cudaEventCreate                   
+      0.0            52285         78        670.3        490.5        351       3065        404.7  cudaEventDestroy                  
+      0.0            11057          1      11057.0      11057.0      11057      11057          0.0  cudaStreamDestroy                 
+      0.0             8472          1       8472.0       8472.0       8472       8472          0.0  cudaMemPoolSetAttribute_v11020    
+      0.0             1261          1       1261.0       1261.0       1261       1261          0.0  cuModuleGetLoadingMode            
+
+[6/8] Executing 'cuda_gpu_kern_sum' stats report
+
+ Time (%)  Total Time (ns)  Instances  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)                                                  Name                                                
+ --------  ---------------  ---------  --------  --------  --------  --------  -----------  ----------------------------------------------------------------------------------------------------
+     85.4         74812873        115  650546.7   52704.0      5664   2823819    1094362.4  void tensorforge::<unnamed>::gemm_optimized_kernel<float, (int)16>(const T1 *, const T1 *, T1 *, lo…
+      2.8          2487726        115   21632.4    2112.0      1152     82111      31176.2  void tensorforge::elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long)                 
+      2.8          2487244        115   21628.2    2112.0      1152     81984      31164.8  void tensorforge::elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long)                 
+      2.7          2381356        115   20707.4    2208.0      1216     80192      30448.5  void tensorforge::elementwise_unary_kernel<float, tensorforge::SigmoidOp>(const T1 *, T1 *, long, T…
+      2.7          2328460        115   20247.5    2208.0      1184     78431      29717.6  void tensorforge::elementwise_unary_kernel<float, tensorforge::TanhOp>(const T1 *, T1 *, long, T2)  
+      2.5          2158860        115   18772.7    2048.0      1151     73151      27720.9  void tensorforge::elementwise_unary_kernel<float, tensorforge::ReluOp>(const T1 *, T1 *, long, T2)  
+      0.8           663259        115    5767.5    2752.0      2592     18304       5067.2  void tensorforge::<unnamed>::softmax_kernel<float>(const T1 *, T1 *, long)                          
+      0.3           304191         92    3306.4    2944.0      2720      5408        708.2  void tensorforge::<unnamed>::layernorm_kernel<float>(const T1 *, const T1 *, const T1 *, T1 *, long…
+
+[7/8] Executing 'cuda_gpu_mem_time_sum' stats report
+
+ Time (%)  Total Time (ns)  Count  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)      Operation     
+ --------  ---------------  -----  --------  --------  --------  --------  -----------  ------------------
+    100.0         16223076     42  386263.7    7248.0       864   3708420     956501.9  [CUDA memcpy HtoD]
+
+[8/8] Executing 'cuda_gpu_mem_size_sum' stats report
+
+ Total (MB)  Count  Avg (MB)  Med (MB)  Min (MB)  Max (MB)  StdDev (MB)      Operation     
+ ----------  -----  --------  --------  --------  --------  -----------  ------------------
+    326.816     42     7.781     0.262     0.004    67.109       17.623  [CUDA memcpy HtoD]
+
+Generated:
+    /data/tensorforge/docs/profiling/op_timeline.nsys-rep
+    /data/tensorforge/docs/profiling/op_timeline.sqlite

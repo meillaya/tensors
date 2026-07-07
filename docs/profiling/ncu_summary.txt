@@ -1,0 +1,1072 @@
+==PROF== Connected to process 84240 (/root/.cache/bazel/_bazel_root/fe0eae06966223017f80a84dd9f62946/execroot/_main/bazel-out/k8-fastbuild/bin/benchmarks/op_bench)
+[op_bench] GPU=H100 (SMs=132), stream=non-null
+[op_bench] warmup=3 iters=20 dtype=float32
+[op_bench] add n=1024  us=331.616  bw=0.0370549 GB/s
+[op_bench] mul n=1024  us=309.696  bw=0.0396776 GB/s
+[op_bench] add n=65536  us=325.952  bw=2.41272 GB/s
+[op_bench] mul n=65536  us=335.52  bw=2.34392 GB/s
+==PROF== Profiling "elementwise_add_kernel" - 0 (1/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 1 (2/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 2 (3/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 3 (4/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 4 (5/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 5 (6/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 6 (7/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 7 (8/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 8 (9/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 9 (10/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 10 (11/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 11 (12/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 12 (13/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 13 (14/30): Application replay pass 1
+==PROF== Profiling "elementwise_add_kernel" - 14 (15/30): Application replay pass 1
+[op_bench] add n=262144  us=11725.4  bw=0.268282 GB/s
+==PROF== Profiling "elementwise_mul_kernel" - 15 (16/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 16 (17/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 17 (18/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 18 (19/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 19 (20/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 20 (21/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 21 (22/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 22 (23/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 23 (24/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 24 (25/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 25 (26/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 26 (27/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 27 (28/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 28 (29/30): Application replay pass 1
+==PROF== Profiling "elementwise_mul_kernel" - 29 (30/30): Application replay pass 1
+[op_bench] mul n=262144  us=10908.4  bw=0.288378 GB/s
+[op_bench] add n=4194304  us=40.256  bw=1250.29 GB/s
+[op_bench] mul n=4194304  us=39.328  bw=1279.79 GB/s
+[op_bench] add n=16777216  us=105.152  bw=1914.62 GB/s
+[op_bench] mul n=16777216  us=104.672  bw=1923.4 GB/s
+[op_bench] relu n=1024  us=31.328  bw=0.261491 GB/s
+[op_bench] sigmoid n=1024  us=31.104  bw=0.263374 GB/s
+[op_bench] tanh n=1024  us=31.264  bw=0.262027 GB/s
+[op_bench] relu n=65536  us=31.52  bw=16.6335 GB/s
+[op_bench] sigmoid n=65536  us=32.16  bw=16.3025 GB/s
+[op_bench] tanh n=65536  us=32.064  bw=16.3513 GB/s
+[op_bench] relu n=262144  us=32.416  bw=64.695 GB/s
+[op_bench] sigmoid n=262144  us=33.568  bw=62.4747 GB/s
+[op_bench] tanh n=262144  us=31.904  bw=65.7332 GB/s
+[op_bench] relu n=4194304  us=34.528  bw=971.804 GB/s
+[op_bench] sigmoid n=4194304  us=37.472  bw=895.453 GB/s
+[op_bench] tanh n=4194304  us=37.696  bw=890.132 GB/s
+[op_bench] relu n=16777216  us=95.968  bw=1398.57 GB/s
+[op_bench] sigmoid n=16777216  us=105.76  bw=1269.08 GB/s
+[op_bench] tanh n=16777216  us=103.136  bw=1301.37 GB/s
+[op_bench] matmul n=128  us=32.768  tflops=0.128
+[op_bench] matmul n=256  us=32.064  tflops=1.04648
+[op_bench] matmul n=512  us=83.424  tflops=3.21772
+[op_bench] matmul n=1024  us=482.976  tflops=4.44636
+[op_bench] matmul n=2048  us=3548.99  tflops=4.84077
+[op_bench] softmax rows=1 cols=1024  us=30.816  bw=0.265836 GB/s
+[op_bench] softmax rows=32 cols=1024  us=30.912  bw=8.48033 GB/s
+[op_bench] softmax rows=128 cols=1024  us=31.072  bw=33.7467 GB/s
+[op_bench] softmax rows=1024 cols=1024  us=29.6  bw=283.399 GB/s
+[op_bench] softmax rows=4096 cols=1024  us=34.368  bw=976.328 GB/s
+[op_bench] layernorm rows=1 cols=1024  us=31.648  bw=0.517695 GB/s
+[op_bench] layernorm rows=32 cols=1024  us=31.808  bw=8.49899 GB/s
+[op_bench] layernorm rows=128 cols=1024  us=32.96  bw=32.0621 GB/s
+[op_bench] layernorm rows=1024 cols=1024  us=33.632  bw=249.667 GB/s
+[op_bench] Wrote /tmp/ncu_test2.json (4031 bytes, 39 entries)
+==PROF== Disconnected from process 84240
+==PROF== Connected to process 84285 (/root/.cache/bazel/_bazel_root/fe0eae06966223017f80a84dd9f62946/execroot/_main/bazel-out/k8-fastbuild/bin/benchmarks/op_bench)
+[op_bench] GPU=H100 (SMs=132), stream=non-null
+[op_bench] warmup=3 iters=20 dtype=float32
+[op_bench] add n=1024  us=292.064  bw=0.042073 GB/s
+[op_bench] mul n=1024  us=332.128  bw=0.0369978 GB/s
+[op_bench] add n=65536  us=290.08  bw=2.71109 GB/s
+[op_bench] mul n=65536  us=337.728  bw=2.3286 GB/s
+==PROF== Profiling "elementwise_add_kernel" - 0 (1/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 1 (2/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 2 (3/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 3 (4/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 4 (5/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 5 (6/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 6 (7/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 7 (8/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 8 (9/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 9 (10/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 10 (11/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 11 (12/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 12 (13/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 13 (14/30): Application replay pass 2
+==PROF== Profiling "elementwise_add_kernel" - 14 (15/30): Application replay pass 2
+[op_bench] add n=262144  us=55722.5  bw=0.0564535 GB/s
+==PROF== Profiling "elementwise_mul_kernel" - 15 (16/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 16 (17/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 17 (18/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 18 (19/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 19 (20/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 20 (21/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 21 (22/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 22 (23/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 23 (24/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 24 (25/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 25 (26/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 26 (27/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 27 (28/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 28 (29/30): Application replay pass 2
+==PROF== Profiling "elementwise_mul_kernel" - 29 (30/30): Application replay pass 2
+[op_bench] mul n=262144  us=55283  bw=0.0569022 GB/s
+[op_bench] add n=4194304  us=41.6  bw=1209.9 GB/s
+[op_bench] mul n=4194304  us=41.28  bw=1219.27 GB/s
+[op_bench] add n=16777216  us=106.272  bw=1894.45 GB/s
+[op_bench] mul n=16777216  us=106.24  bw=1895.02 GB/s
+[op_bench] relu n=1024  us=33.056  bw=0.247822 GB/s
+[op_bench] sigmoid n=1024  us=32.384  bw=0.252964 GB/s
+[op_bench] tanh n=1024  us=33.6  bw=0.24381 GB/s
+[op_bench] relu n=65536  us=33.024  bw=15.876 GB/s
+[op_bench] sigmoid n=65536  us=32.928  bw=15.9223 GB/s
+[op_bench] tanh n=65536  us=33.504  bw=15.6485 GB/s
+[op_bench] relu n=262144  us=34.72  bw=60.4018 GB/s
+[op_bench] sigmoid n=262144  us=34.848  bw=60.18 GB/s
+[op_bench] tanh n=262144  us=33.152  bw=63.2587 GB/s
+[op_bench] relu n=4194304  us=36.416  bw=921.42 GB/s
+[op_bench] sigmoid n=4194304  us=40.416  bw=830.226 GB/s
+[op_bench] tanh n=4194304  us=39.36  bw=852.501 GB/s
+[op_bench] relu n=16777216  us=97.472  bw=1376.99 GB/s
+[op_bench] sigmoid n=16777216  us=107.712  bw=1246.08 GB/s
+[op_bench] tanh n=16777216  us=105.824  bw=1268.31 GB/s
+[op_bench] matmul n=128  us=35.072  tflops=0.119591
+[op_bench] matmul n=256  us=35.584  tflops=0.942964
+[op_bench] matmul n=512  us=86.912  tflops=3.08859
+[op_bench] matmul n=1024  us=484.864  tflops=4.42904
+[op_bench] matmul n=2048  us=3548.61  tflops=4.8413
+[op_bench] softmax rows=1 cols=1024  us=32.288  bw=0.253717 GB/s
+[op_bench] softmax rows=32 cols=1024  us=32.832  bw=7.98441 GB/s
+[op_bench] softmax rows=128 cols=1024  us=33.152  bw=31.6293 GB/s
+[op_bench] softmax rows=1024 cols=1024  us=31.776  bw=263.992 GB/s
+[op_bench] softmax rows=4096 cols=1024  us=36.512  bw=918.997 GB/s
+[op_bench] layernorm rows=1 cols=1024  us=35.712  bw=0.458781 GB/s
+[op_bench] layernorm rows=32 cols=1024  us=34.752  bw=7.77901 GB/s
+[op_bench] layernorm rows=128 cols=1024  us=35.168  bw=30.0491 GB/s
+[op_bench] layernorm rows=1024 cols=1024  us=34.816  bw=241.176 GB/s
+[op_bench] Wrote /tmp/ncu_test2.json (4031 bytes, 39 entries)
+==PROF== Disconnected from process 84285
+==PROF== Connected to process 84330 (/root/.cache/bazel/_bazel_root/fe0eae06966223017f80a84dd9f62946/execroot/_main/bazel-out/k8-fastbuild/bin/benchmarks/op_bench)
+[op_bench] GPU=H100 (SMs=132), stream=non-null
+[op_bench] warmup=3 iters=20 dtype=float32
+[op_bench] add n=1024  us=285.184  bw=0.043088 GB/s
+[op_bench] mul n=1024  us=287.744  bw=0.0427046 GB/s
+[op_bench] add n=65536  us=291.648  bw=2.69651 GB/s
+[op_bench] mul n=65536  us=282.624  bw=2.78261 GB/s
+==PROF== Profiling "elementwise_add_kernel" - 0 (1/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 1 (2/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 2 (3/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 3 (4/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 4 (5/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 5 (6/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 6 (7/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 7 (8/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 8 (9/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 9 (10/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 10 (11/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 11 (12/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 12 (13/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 13 (14/30): Application replay pass 3
+==PROF== Profiling "elementwise_add_kernel" - 14 (15/30): Application replay pass 3
+[op_bench] add n=262144  us=50759.2  bw=0.0619735 GB/s
+==PROF== Profiling "elementwise_mul_kernel" - 15 (16/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 16 (17/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 17 (18/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 18 (19/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 19 (20/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 20 (21/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 21 (22/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 22 (23/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 23 (24/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 24 (25/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 25 (26/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 26 (27/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 27 (28/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 28 (29/30): Application replay pass 3
+==PROF== Profiling "elementwise_mul_kernel" - 29 (30/30): Application replay pass 3
+[op_bench] mul n=262144  us=50375.4  bw=0.0624457 GB/s
+[op_bench] add n=4194304  us=41.792  bw=1204.34 GB/s
+[op_bench] mul n=4194304  us=41.472  bw=1213.63 GB/s
+[op_bench] add n=16777216  us=106.656  bw=1887.63 GB/s
+[op_bench] mul n=16777216  us=106.368  bw=1892.74 GB/s
+[op_bench] relu n=1024  us=33.792  bw=0.242424 GB/s
+[op_bench] sigmoid n=1024  us=34.08  bw=0.240376 GB/s
+[op_bench] tanh n=1024  us=33.92  bw=0.241509 GB/s
+[op_bench] relu n=65536  us=34.336  bw=15.2693 GB/s
+[op_bench] sigmoid n=65536  us=35.648  bw=14.7074 GB/s
+[op_bench] tanh n=65536  us=33.728  bw=15.5446 GB/s
+[op_bench] relu n=262144  us=34.112  bw=61.4784 GB/s
+[op_bench] sigmoid n=262144  us=33.76  bw=62.1194 GB/s
+[op_bench] tanh n=262144  us=33.952  bw=61.7681 GB/s
+[op_bench] relu n=4194304  us=37.248  bw=900.838 GB/s
+[op_bench] sigmoid n=4194304  us=40.128  bw=836.185 GB/s
+[op_bench] tanh n=4194304  us=39.328  bw=853.194 GB/s
+[op_bench] relu n=16777216  us=97.952  bw=1370.24 GB/s
+[op_bench] sigmoid n=16777216  us=108.032  bw=1242.39 GB/s
+[op_bench] tanh n=16777216  us=104.928  bw=1279.14 GB/s
+[op_bench] matmul n=128  us=34.464  tflops=0.121701
+[op_bench] matmul n=256  us=36.288  tflops=0.92467
+[op_bench] matmul n=512  us=86.944  tflops=3.08745
+[op_bench] matmul n=1024  us=485.28  tflops=4.42525
+[op_bench] matmul n=2048  us=3548.64  tflops=4.84125
+[op_bench] softmax rows=1 cols=1024  us=33.824  bw=0.242195 GB/s
+[op_bench] softmax rows=32 cols=1024  us=33.728  bw=7.7723 GB/s
+[op_bench] softmax rows=128 cols=1024  us=35.104  bw=29.8706 GB/s
+[op_bench] softmax rows=1024 cols=1024  us=33.152  bw=253.035 GB/s
+[op_bench] softmax rows=4096 cols=1024  us=35.968  bw=932.897 GB/s
+[op_bench] layernorm rows=1 cols=1024  us=34.304  bw=0.477612 GB/s
+[op_bench] layernorm rows=32 cols=1024  us=35.616  bw=7.5903 GB/s
+[op_bench] layernorm rows=128 cols=1024  us=34.72  bw=30.4369 GB/s
+[op_bench] layernorm rows=1024 cols=1024  us=33.568  bw=250.143 GB/s
+[op_bench] Wrote /tmp/ncu_test2.json (4031 bytes, 39 entries)
+==PROF== Disconnected from process 84330
+==PROF== Connected to process 84374 (/root/.cache/bazel/_bazel_root/fe0eae06966223017f80a84dd9f62946/execroot/_main/bazel-out/k8-fastbuild/bin/benchmarks/op_bench)
+[op_bench] GPU=H100 (SMs=132), stream=non-null
+[op_bench] warmup=3 iters=20 dtype=float32
+[op_bench] add n=1024  us=292.096  bw=0.0420684 GB/s
+[op_bench] mul n=1024  us=293.984  bw=0.0417982 GB/s
+[op_bench] add n=65536  us=284.288  bw=2.76632 GB/s
+[op_bench] mul n=65536  us=291.104  bw=2.70155 GB/s
+==PROF== Profiling "elementwise_add_kernel" - 0 (1/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 1 (2/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 2 (3/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 3 (4/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 4 (5/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 5 (6/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 6 (7/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 7 (8/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 8 (9/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 9 (10/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 10 (11/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 11 (12/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 12 (13/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 13 (14/30): Application replay pass 4
+==PROF== Profiling "elementwise_add_kernel" - 14 (15/30): Application replay pass 4
+[op_bench] add n=262144  us=42370.9  bw=0.0742426 GB/s
+==PROF== Profiling "elementwise_mul_kernel" - 15 (16/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 16 (17/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 17 (18/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 18 (19/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 19 (20/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 20 (21/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 21 (22/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 22 (23/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 23 (24/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 24 (25/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 25 (26/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 26 (27/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 27 (28/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 28 (29/30): Application replay pass 4
+==PROF== Profiling "elementwise_mul_kernel" - 29 (30/30): Application replay pass 4
+[op_bench] mul n=262144  us=42026.5  bw=0.074851 GB/s
+[op_bench] add n=4194304  us=41.28  bw=1219.27 GB/s
+[op_bench] mul n=4194304  us=40.8  bw=1233.62 GB/s
+[op_bench] add n=16777216  us=105.664  bw=1905.35 GB/s
+[op_bench] mul n=16777216  us=104.96  bw=1918.13 GB/s
+[op_bench] relu n=1024  us=32.544  bw=0.251721 GB/s
+[op_bench] sigmoid n=1024  us=31.936  bw=0.256513 GB/s
+[op_bench] tanh n=1024  us=33.088  bw=0.247582 GB/s
+[op_bench] relu n=65536  us=33.824  bw=15.5005 GB/s
+[op_bench] sigmoid n=65536  us=32.672  bw=16.047 GB/s
+[op_bench] tanh n=65536  us=32.352  bw=16.2057 GB/s
+[op_bench] relu n=262144  us=33.152  bw=63.2587 GB/s
+[op_bench] sigmoid n=262144  us=32.608  bw=64.314 GB/s
+[op_bench] tanh n=262144  us=32.448  bw=64.6312 GB/s
+[op_bench] relu n=4194304  us=37.024  bw=906.289 GB/s
+[op_bench] sigmoid n=4194304  us=40.8  bw=822.413 GB/s
+[op_bench] tanh n=4194304  us=38.592  bw=869.466 GB/s
+[op_bench] relu n=16777216  us=97.44  bw=1377.44 GB/s
+[op_bench] sigmoid n=16777216  us=108.192  bw=1240.55 GB/s
+[op_bench] tanh n=16777216  us=105.44  bw=1272.93 GB/s
+[op_bench] matmul n=128  us=34.752  tflops=0.120692
+[op_bench] matmul n=256  us=34.848  tflops=0.96288
+[op_bench] matmul n=512  us=84.32  tflops=3.18353
+[op_bench] matmul n=1024  us=484.448  tflops=4.43285
+[op_bench] matmul n=2048  us=3549.54  tflops=4.84003
+[op_bench] softmax rows=1 cols=1024  us=33.216  bw=0.246628 GB/s
+[op_bench] softmax rows=32 cols=1024  us=33.088  bw=7.92263 GB/s
+[op_bench] softmax rows=128 cols=1024  us=33.408  bw=31.387 GB/s
+[op_bench] softmax rows=1024 cols=1024  us=33.536  bw=250.137 GB/s
+[op_bench] softmax rows=4096 cols=1024  us=36.032  bw=931.24 GB/s
+[op_bench] layernorm rows=1 cols=1024  us=36.224  bw=0.452297 GB/s
+[op_bench] layernorm rows=32 cols=1024  us=33.728  bw=8.01518 GB/s
+[op_bench] layernorm rows=128 cols=1024  us=34.336  bw=30.7773 GB/s
+[op_bench] layernorm rows=1024 cols=1024  us=33.632  bw=249.667 GB/s
+[op_bench] Wrote /tmp/ncu_test2.json (4031 bytes, 39 entries)
+==PROF== Disconnected from process 84374
+==PROF== Connected to process 84420 (/root/.cache/bazel/_bazel_root/fe0eae06966223017f80a84dd9f62946/execroot/_main/bazel-out/k8-fastbuild/bin/benchmarks/op_bench)
+[op_bench] GPU=H100 (SMs=132), stream=non-null
+[op_bench] warmup=3 iters=20 dtype=float32
+[op_bench] add n=1024  us=297.088  bw=0.0413615 GB/s
+[op_bench] mul n=1024  us=298.368  bw=0.041184 GB/s
+[op_bench] add n=65536  us=344.672  bw=2.28168 GB/s
+[op_bench] mul n=65536  us=346.72  bw=2.2682 GB/s
+==PROF== Profiling "elementwise_add_kernel" - 0 (1/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 1 (2/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 2 (3/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 3 (4/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 4 (5/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 5 (6/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 6 (7/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 7 (8/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 8 (9/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 9 (10/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 10 (11/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 11 (12/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 12 (13/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 13 (14/30): Application replay pass 5
+==PROF== Profiling "elementwise_add_kernel" - 14 (15/30): Application replay pass 5
+[op_bench] add n=262144  us=26655.9  bw=0.118012 GB/s
+==PROF== Profiling "elementwise_mul_kernel" - 15 (16/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 16 (17/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 17 (18/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 18 (19/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 19 (20/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 20 (21/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 21 (22/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 22 (23/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 23 (24/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 24 (25/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 25 (26/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 26 (27/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 27 (28/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 28 (29/30): Application replay pass 5
+==PROF== Profiling "elementwise_mul_kernel" - 29 (30/30): Application replay pass 5
+[op_bench] mul n=262144  us=26503.5  bw=0.118691 GB/s
+[op_bench] add n=4194304  us=40.448  bw=1244.35 GB/s
+[op_bench] mul n=4194304  us=41.056  bw=1225.93 GB/s
+[op_bench] add n=16777216  us=106.304  bw=1893.88 GB/s
+[op_bench] mul n=16777216  us=106.4  bw=1892.17 GB/s
+[op_bench] relu n=1024  us=33.984  bw=0.241055 GB/s
+[op_bench] sigmoid n=1024  us=37.728  bw=0.217133 GB/s
+[op_bench] tanh n=1024  us=35.008  bw=0.234004 GB/s
+[op_bench] relu n=65536  us=34.528  bw=15.1844 GB/s
+[op_bench] sigmoid n=65536  us=34.176  bw=15.3408 GB/s
+[op_bench] tanh n=65536  us=34.944  bw=15.0037 GB/s
+[op_bench] relu n=262144  us=34.592  bw=60.6253 GB/s
+[op_bench] sigmoid n=262144  us=36.256  bw=57.8429 GB/s
+[op_bench] tanh n=262144  us=36.672  bw=57.1867 GB/s
+[op_bench] relu n=4194304  us=36.8  bw=911.805 GB/s
+[op_bench] sigmoid n=4194304  us=40.032  bw=838.19 GB/s
+[op_bench] tanh n=4194304  us=39.328  bw=853.194 GB/s
+[op_bench] relu n=16777216  us=98.08  bw=1368.45 GB/s
+[op_bench] sigmoid n=16777216  us=108.16  bw=1240.92 GB/s
+[op_bench] tanh n=16777216  us=105.28  bw=1274.86 GB/s
+[op_bench] matmul n=128  us=34.016  tflops=0.123304
+[op_bench] matmul n=256  us=34.656  tflops=0.968214
+[op_bench] matmul n=512  us=87.104  tflops=3.08178
+[op_bench] matmul n=1024  us=485.568  tflops=4.42262
+[op_bench] matmul n=2048  us=3547.78  tflops=4.84243
+[op_bench] softmax rows=1 cols=1024  us=33.664  bw=0.243346 GB/s
+[op_bench] softmax rows=32 cols=1024  us=32.672  bw=8.02351 GB/s
+[op_bench] softmax rows=128 cols=1024  us=32.448  bw=32.3156 GB/s
+[op_bench] softmax rows=1024 cols=1024  us=33.344  bw=251.578 GB/s
+[op_bench] softmax rows=4096 cols=1024  us=36.48  bw=919.804 GB/s
+[op_bench] layernorm rows=1 cols=1024  us=34.304  bw=0.477612 GB/s
+[op_bench] layernorm rows=32 cols=1024  us=34.272  bw=7.88796 GB/s
+[op_bench] layernorm rows=128 cols=1024  us=36.352  bw=29.0704 GB/s
+[op_bench] layernorm rows=1024 cols=1024  us=34.336  bw=244.548 GB/s
+[op_bench] Wrote /tmp/ncu_test2.json (4031 bytes, 39 entries)
+==PROF== Disconnected from process 84420
+==PROF== Connected to process 84464 (/root/.cache/bazel/_bazel_root/fe0eae06966223017f80a84dd9f62946/execroot/_main/bazel-out/k8-fastbuild/bin/benchmarks/op_bench)
+[op_bench] GPU=H100 (SMs=132), stream=non-null
+[op_bench] warmup=3 iters=20 dtype=float32
+[op_bench] add n=1024  us=299.008  bw=0.0410959 GB/s
+[op_bench] mul n=1024  us=296.576  bw=0.0414329 GB/s
+[op_bench] add n=65536  us=301.92  bw=2.60477 GB/s
+[op_bench] mul n=65536  us=346.336  bw=2.27072 GB/s
+==PROF== Profiling "elementwise_add_kernel" - 0 (1/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 1 (2/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 2 (3/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 3 (4/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 4 (5/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 5 (6/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 6 (7/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 7 (8/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 8 (9/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 9 (10/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 10 (11/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 11 (12/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 12 (13/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 13 (14/30): Application replay pass 6
+==PROF== Profiling "elementwise_add_kernel" - 14 (15/30): Application replay pass 6
+[op_bench] add n=262144  us=26599.5  bw=0.118263 GB/s
+==PROF== Profiling "elementwise_mul_kernel" - 15 (16/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 16 (17/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 17 (18/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 18 (19/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 19 (20/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 20 (21/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 21 (22/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 22 (23/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 23 (24/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 24 (25/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 25 (26/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 26 (27/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 27 (28/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 28 (29/30): Application replay pass 6
+==PROF== Profiling "elementwise_mul_kernel" - 29 (30/30): Application replay pass 6
+[op_bench] mul n=262144  us=26641.6  bw=0.118076 GB/s
+[op_bench] add n=4194304  us=41.696  bw=1207.11 GB/s
+[op_bench] mul n=4194304  us=40.896  bw=1230.72 GB/s
+[op_bench] add n=16777216  us=106.752  bw=1885.93 GB/s
+[op_bench] mul n=16777216  us=105.888  bw=1901.32 GB/s
+[op_bench] relu n=1024  us=33.856  bw=0.241966 GB/s
+[op_bench] sigmoid n=1024  us=34.464  bw=0.237697 GB/s
+[op_bench] tanh n=1024  us=34.4  bw=0.23814 GB/s
+[op_bench] relu n=65536  us=34.912  bw=15.0174 GB/s
+[op_bench] sigmoid n=65536  us=35.232  bw=14.881 GB/s
+[op_bench] tanh n=65536  us=34.72  bw=15.1005 GB/s
+[op_bench] relu n=262144  us=33.952  bw=61.7681 GB/s
+[op_bench] sigmoid n=262144  us=33.792  bw=62.0606 GB/s
+[op_bench] tanh n=262144  us=33.568  bw=62.4747 GB/s
+[op_bench] relu n=4194304  us=36.448  bw=920.611 GB/s
+[op_bench] sigmoid n=4194304  us=39.68  bw=845.626 GB/s
+[op_bench] tanh n=4194304  us=39.008  bw=860.194 GB/s
+[op_bench] relu n=16777216  us=97.824  bw=1372.03 GB/s
+[op_bench] sigmoid n=16777216  us=108  bw=1242.76 GB/s
+[op_bench] tanh n=16777216  us=106.016  bw=1266.01 GB/s
+[op_bench] matmul n=128  us=35.36  tflops=0.118617
+[op_bench] matmul n=256  us=35.232  tflops=0.952385
+[op_bench] matmul n=512  us=86.848  tflops=3.09087
+[op_bench] matmul n=1024  us=484.48  tflops=4.43255
+[op_bench] matmul n=2048  us=3548.38  tflops=4.8416
+[op_bench] softmax rows=1 cols=1024  us=33.088  bw=0.247582 GB/s
+[op_bench] softmax rows=32 cols=1024  us=31.872  bw=8.2249 GB/s
+[op_bench] softmax rows=128 cols=1024  us=32.256  bw=32.5079 GB/s
+[op_bench] softmax rows=1024 cols=1024  us=32.704  bw=256.501 GB/s
+[op_bench] softmax rows=4096 cols=1024  us=36.32  bw=923.855 GB/s
+[op_bench] layernorm rows=1 cols=1024  us=36.512  bw=0.448729 GB/s
+[op_bench] layernorm rows=32 cols=1024  us=34.4  bw=7.8586 GB/s
+[op_bench] layernorm rows=128 cols=1024  us=35.872  bw=29.4594 GB/s
+[op_bench] layernorm rows=1024 cols=1024  us=33.504  bw=250.621 GB/s
+[op_bench] Wrote /tmp/ncu_test2.json (4031 bytes, 39 entries)
+==PROF== Disconnected from process 84464
+==PROF== Connected to process 84508 (/root/.cache/bazel/_bazel_root/fe0eae06966223017f80a84dd9f62946/execroot/_main/bazel-out/k8-fastbuild/bin/benchmarks/op_bench)
+[op_bench] GPU=H100 (SMs=132), stream=non-null
+[op_bench] warmup=3 iters=20 dtype=float32
+[op_bench] add n=1024  us=343.52  bw=0.0357708 GB/s
+[op_bench] mul n=1024  us=351.744  bw=0.0349345 GB/s
+[op_bench] add n=65536  us=293.696  bw=2.67771 GB/s
+[op_bench] mul n=65536  us=347.424  bw=2.26361 GB/s
+==PROF== Profiling "elementwise_add_kernel" - 0 (1/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 1 (2/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 2 (3/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 3 (4/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 4 (5/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 5 (6/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 6 (7/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 7 (8/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 8 (9/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 9 (10/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 10 (11/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 11 (12/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 12 (13/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 13 (14/30): Application replay pass 7
+==PROF== Profiling "elementwise_add_kernel" - 14 (15/30): Application replay pass 7
+[op_bench] add n=262144  us=12396.4  bw=0.253762 GB/s
+==PROF== Profiling "elementwise_mul_kernel" - 15 (16/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 16 (17/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 17 (18/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 18 (19/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 19 (20/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 20 (21/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 21 (22/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 22 (23/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 23 (24/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 24 (25/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 25 (26/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 26 (27/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 27 (28/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 28 (29/30): Application replay pass 7
+==PROF== Profiling "elementwise_mul_kernel" - 29 (30/30): Application replay pass 7
+[op_bench] mul n=262144  us=11402.3  bw=0.275885 GB/s
+[op_bench] add n=4194304  us=40.192  bw=1252.28 GB/s
+[op_bench] mul n=4194304  us=40.672  bw=1237.5 GB/s
+[op_bench] add n=16777216  us=105.76  bw=1903.62 GB/s
+[op_bench] mul n=16777216  us=105.408  bw=1909.97 GB/s
+[op_bench] relu n=1024  us=33.824  bw=0.242195 GB/s
+[op_bench] sigmoid n=1024  us=33.568  bw=0.244042 GB/s
+[op_bench] tanh n=1024  us=32.608  bw=0.251227 GB/s
+[op_bench] relu n=65536  us=33.536  bw=15.6336 GB/s
+[op_bench] sigmoid n=65536  us=35.296  bw=14.854 GB/s
+[op_bench] tanh n=65536  us=33.024  bw=15.876 GB/s
+[op_bench] relu n=262144  us=32.288  bw=64.9514 GB/s
+[op_bench] sigmoid n=262144  us=33.312  bw=62.9549 GB/s
+[op_bench] tanh n=262144  us=32.32  bw=64.8871 GB/s
+[op_bench] relu n=4194304  us=36.48  bw=919.804 GB/s
+[op_bench] sigmoid n=4194304  us=38.848  bw=863.736 GB/s
+[op_bench] tanh n=4194304  us=38.528  bw=870.91 GB/s
+[op_bench] relu n=16777216  us=96.992  bw=1383.8 GB/s
+[op_bench] sigmoid n=16777216  us=107.232  bw=1251.66 GB/s
+[op_bench] tanh n=16777216  us=105.024  bw=1277.97 GB/s
+[op_bench] matmul n=128  us=33.92  tflops=0.123653
+[op_bench] matmul n=256  us=35.328  tflops=0.949797
+[op_bench] matmul n=512  us=84.384  tflops=3.18112
+[op_bench] matmul n=1024  us=484.224  tflops=4.4349
+[op_bench] matmul n=2048  us=3547.49  tflops=4.84283
+[op_bench] softmax rows=1 cols=1024  us=32  bw=0.256 GB/s
+[op_bench] softmax rows=32 cols=1024  us=32.64  bw=8.03137 GB/s
+[op_bench] softmax rows=128 cols=1024  us=30.624  bw=34.2403 GB/s
+[op_bench] softmax rows=1024 cols=1024  us=30.624  bw=273.923 GB/s
+[op_bench] softmax rows=4096 cols=1024  us=35.872  bw=935.393 GB/s
+[op_bench] layernorm rows=1 cols=1024  us=32.896  bw=0.498054 GB/s
+[op_bench] layernorm rows=32 cols=1024  us=33.536  bw=8.06107 GB/s
+[op_bench] layernorm rows=128 cols=1024  us=32.8  bw=32.2185 GB/s
+[op_bench] layernorm rows=1024 cols=1024  us=31.424  bw=267.21 GB/s
+[op_bench] Wrote /tmp/ncu_test2.json (4031 bytes, 39 entries)
+==PROF== Disconnected from process 84508
+==PROF== Connected to process 84553 (/root/.cache/bazel/_bazel_root/fe0eae06966223017f80a84dd9f62946/execroot/_main/bazel-out/k8-fastbuild/bin/benchmarks/op_bench)
+[op_bench] GPU=H100 (SMs=132), stream=non-null
+[op_bench] warmup=3 iters=20 dtype=float32
+[op_bench] add n=1024  us=300  bw=0.04096 GB/s
+[op_bench] mul n=1024  us=302.208  bw=0.0406607 GB/s
+[op_bench] add n=65536  us=327.552  bw=2.40094 GB/s
+[op_bench] mul n=65536  us=320.832  bw=2.45123 GB/s
+==PROF== Profiling "elementwise_add_kernel" - 0 (1/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 1 (2/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 2 (3/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 3 (4/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 4 (5/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 5 (6/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 6 (7/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 7 (8/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 8 (9/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 9 (10/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 10 (11/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 11 (12/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 12 (13/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 13 (14/30): Application replay pass 8
+==PROF== Profiling "elementwise_add_kernel" - 14 (15/30): Application replay pass 8
+[op_bench] add n=262144  us=12522  bw=0.251215 GB/s
+==PROF== Profiling "elementwise_mul_kernel" - 15 (16/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 16 (17/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 17 (18/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 18 (19/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 19 (20/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 20 (21/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 21 (22/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 22 (23/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 23 (24/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 24 (25/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 25 (26/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 26 (27/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 27 (28/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 28 (29/30): Application replay pass 8
+==PROF== Profiling "elementwise_mul_kernel" - 29 (30/30): Application replay pass 8
+[op_bench] mul n=262144  us=11648.2  bw=0.270062 GB/s
+[op_bench] add n=4194304  us=41.312  bw=1218.33 GB/s
+[op_bench] mul n=4194304  us=41.056  bw=1225.93 GB/s
+[op_bench] add n=16777216  us=106.144  bw=1896.73 GB/s
+[op_bench] mul n=16777216  us=106.4  bw=1892.17 GB/s
+[op_bench] relu n=1024  us=34.912  bw=0.234647 GB/s
+[op_bench] sigmoid n=1024  us=33.12  bw=0.247343 GB/s
+[op_bench] tanh n=1024  us=35.04  bw=0.23379 GB/s
+[op_bench] relu n=65536  us=35.04  bw=14.9626 GB/s
+[op_bench] sigmoid n=65536  us=35.072  bw=14.9489 GB/s
+[op_bench] tanh n=65536  us=34.368  bw=15.2551 GB/s
+[op_bench] relu n=262144  us=35.2  bw=59.5782 GB/s
+[op_bench] sigmoid n=262144  us=34.016  bw=61.6519 GB/s
+[op_bench] tanh n=262144  us=33.728  bw=62.1784 GB/s
+[op_bench] relu n=4194304  us=36.704  bw=914.19 GB/s
+[op_bench] sigmoid n=4194304  us=40.736  bw=823.705 GB/s
+[op_bench] tanh n=4194304  us=39.168  bw=856.68 GB/s
+[op_bench] relu n=16777216  us=97.408  bw=1377.89 GB/s
+[op_bench] sigmoid n=16777216  us=108.352  bw=1238.72 GB/s
+[op_bench] tanh n=16777216  us=105.376  bw=1273.7 GB/s
+[op_bench] matmul n=128  us=36.8  tflops=0.113976
+[op_bench] matmul n=256  us=35.104  tflops=0.955858
+[op_bench] matmul n=512  us=86.592  tflops=3.1
+[op_bench] matmul n=1024  us=485.088  tflops=4.427
+[op_bench] matmul n=2048  us=3548.7  tflops=4.84117
+[op_bench] softmax rows=1 cols=1024  us=33.376  bw=0.245446 GB/s
+[op_bench] softmax rows=32 cols=1024  us=33.312  bw=7.86936 GB/s
+[op_bench] softmax rows=128 cols=1024  us=33.152  bw=31.6293 GB/s
+[op_bench] softmax rows=1024 cols=1024  us=33.312  bw=251.819 GB/s
+[op_bench] softmax rows=4096 cols=1024  us=36.704  bw=914.19 GB/s
+[op_bench] layernorm rows=1 cols=1024  us=34.752  bw=0.471455 GB/s
+[op_bench] layernorm rows=32 cols=1024  us=35.904  bw=7.52941 GB/s
+[op_bench] layernorm rows=128 cols=1024  us=34.656  bw=30.4931 GB/s
+[op_bench] layernorm rows=1024 cols=1024  us=35.648  bw=235.548 GB/s
+[op_bench] Wrote /tmp/ncu_test2.json (4031 bytes, 39 entries)
+==PROF== Disconnected from process 84553
+==PROF== Connected to process 84597 (/root/.cache/bazel/_bazel_root/fe0eae06966223017f80a84dd9f62946/execroot/_main/bazel-out/k8-fastbuild/bin/benchmarks/op_bench)
+[op_bench] GPU=H100 (SMs=132), stream=non-null
+[op_bench] warmup=3 iters=20 dtype=float32
+[op_bench] add n=1024  us=342.752  bw=0.035851 GB/s
+[op_bench] mul n=1024  us=339.968  bw=0.0361446 GB/s
+[op_bench] add n=65536  us=342.304  bw=2.29747 GB/s
+[op_bench] mul n=65536  us=305.152  bw=2.57718 GB/s
+==PROF== Profiling "elementwise_add_kernel" - 0 (1/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 1 (2/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 2 (3/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 3 (4/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 4 (5/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 5 (6/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 6 (7/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 7 (8/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 8 (9/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 9 (10/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 10 (11/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 11 (12/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 12 (13/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 13 (14/30): Application replay pass 9
+==PROF== Profiling "elementwise_add_kernel" - 14 (15/30): Application replay pass 9
+[op_bench] add n=262144  us=12533.1  bw=0.250994 GB/s
+==PROF== Profiling "elementwise_mul_kernel" - 15 (16/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 16 (17/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 17 (18/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 18 (19/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 19 (20/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 20 (21/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 21 (22/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 22 (23/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 23 (24/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 24 (25/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 25 (26/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 26 (27/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 27 (28/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 28 (29/30): Application replay pass 9
+==PROF== Profiling "elementwise_mul_kernel" - 29 (30/30): Application replay pass 9
+[op_bench] mul n=262144  us=11495.6  bw=0.273647 GB/s
+[op_bench] add n=4194304  us=40.512  bw=1242.39 GB/s
+[op_bench] mul n=4194304  us=40.416  bw=1245.34 GB/s
+[op_bench] add n=16777216  us=105.664  bw=1905.35 GB/s
+[op_bench] mul n=16777216  us=105.184  bw=1914.04 GB/s
+[op_bench] relu n=1024  us=32.096  bw=0.255234 GB/s
+[op_bench] sigmoid n=1024  us=33.792  bw=0.242424 GB/s
+[op_bench] tanh n=1024  us=33.568  bw=0.244042 GB/s
+[op_bench] relu n=65536  us=32.192  bw=16.2863 GB/s
+[op_bench] sigmoid n=65536  us=31.712  bw=16.5328 GB/s
+[op_bench] tanh n=65536  us=31.648  bw=16.5662 GB/s
+[op_bench] relu n=262144  us=31.872  bw=65.7992 GB/s
+[op_bench] sigmoid n=262144  us=33.216  bw=63.1368 GB/s
+[op_bench] tanh n=262144  us=31.936  bw=65.6673 GB/s
+[op_bench] relu n=4194304  us=36  bw=932.068 GB/s
+[op_bench] sigmoid n=4194304  us=39.008  bw=860.194 GB/s
+[op_bench] tanh n=4194304  us=38.144  bw=879.678 GB/s
+[op_bench] relu n=16777216  us=97.056  bw=1382.89 GB/s
+[op_bench] sigmoid n=16777216  us=107.232  bw=1251.66 GB/s
+[op_bench] tanh n=16777216  us=104.576  bw=1283.45 GB/s
+[op_bench] matmul n=128  us=32.096  tflops=0.13068
+[op_bench] matmul n=256  us=32.352  tflops=1.03717
+[op_bench] matmul n=512  us=86.656  tflops=3.09771
+[op_bench] matmul n=1024  us=483.904  tflops=4.43783
+[op_bench] matmul n=2048  us=3546.5  tflops=4.84418
+[op_bench] softmax rows=1 cols=1024  us=32.192  bw=0.254473 GB/s
+[op_bench] softmax rows=32 cols=1024  us=30.656  bw=8.55115 GB/s
+[op_bench] softmax rows=128 cols=1024  us=31.2  bw=33.6082 GB/s
+[op_bench] softmax rows=1024 cols=1024  us=31.072  bw=269.973 GB/s
+[op_bench] softmax rows=4096 cols=1024  us=35.648  bw=941.271 GB/s
+[op_bench] layernorm rows=1 cols=1024  us=32.928  bw=0.49757 GB/s
+[op_bench] layernorm rows=32 cols=1024  us=32.544  bw=8.30679 GB/s
+[op_bench] layernorm rows=128 cols=1024  us=32.192  bw=32.827 GB/s
+[op_bench] layernorm rows=1024 cols=1024  us=33.44  bw=251.1 GB/s
+[op_bench] Wrote /tmp/ncu_test2.json (4031 bytes, 39 entries)
+==PROF== Disconnected from process 84597
+==PROF== Connected to process 84641 (/root/.cache/bazel/_bazel_root/fe0eae06966223017f80a84dd9f62946/execroot/_main/bazel-out/k8-fastbuild/bin/benchmarks/op_bench)
+[op_bench] GPU=H100 (SMs=132), stream=non-null
+[op_bench] warmup=3 iters=20 dtype=float32
+[op_bench] add n=1024  us=308.704  bw=0.0398051 GB/s
+[op_bench] mul n=1024  us=340.288  bw=0.0361106 GB/s
+[op_bench] add n=65536  us=337.92  bw=2.32727 GB/s
+[op_bench] mul n=65536  us=334.528  bw=2.35087 GB/s
+==PROF== Profiling "elementwise_add_kernel" - 0 (1/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 1 (2/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 2 (3/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 3 (4/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 4 (5/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 5 (6/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 6 (7/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 7 (8/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 8 (9/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 9 (10/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 10 (11/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 11 (12/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 12 (13/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 13 (14/30): Application replay pass 10
+==PROF== Profiling "elementwise_add_kernel" - 14 (15/30): Application replay pass 10
+[op_bench] add n=262144  us=12887.7  bw=0.244087 GB/s
+==PROF== Profiling "elementwise_mul_kernel" - 15 (16/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 16 (17/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 17 (18/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 18 (19/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 19 (20/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 20 (21/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 21 (22/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 22 (23/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 23 (24/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 24 (25/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 25 (26/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 26 (27/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 27 (28/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 28 (29/30): Application replay pass 10
+==PROF== Profiling "elementwise_mul_kernel" - 29 (30/30): Application replay pass 10
+[op_bench] mul n=262144  us=11784.1  bw=0.266947 GB/s
+[op_bench] add n=4194304  us=41.376  bw=1216.45 GB/s
+[op_bench] mul n=4194304  us=41.312  bw=1218.33 GB/s
+[op_bench] add n=16777216  us=106.432  bw=1891.6 GB/s
+[op_bench] mul n=16777216  us=105.952  bw=1900.17 GB/s
+[op_bench] relu n=1024  us=33.6  bw=0.24381 GB/s
+[op_bench] sigmoid n=1024  us=33.952  bw=0.241282 GB/s
+[op_bench] tanh n=1024  us=33.12  bw=0.247343 GB/s
+[op_bench] relu n=65536  us=35.68  bw=14.6942 GB/s
+[op_bench] sigmoid n=65536  us=34.208  bw=15.3265 GB/s
+[op_bench] tanh n=65536  us=34.048  bw=15.3985 GB/s
+[op_bench] relu n=262144  us=33.248  bw=63.076 GB/s
+[op_bench] sigmoid n=262144  us=34.336  bw=61.0774 GB/s
+[op_bench] tanh n=262144  us=34.016  bw=61.6519 GB/s
+[op_bench] relu n=4194304  us=37.184  bw=902.389 GB/s
+[op_bench] sigmoid n=4194304  us=39.968  bw=839.532 GB/s
+[op_bench] tanh n=4194304  us=39.264  bw=854.585 GB/s
+[op_bench] relu n=16777216  us=98.272  bw=1365.78 GB/s
+[op_bench] sigmoid n=16777216  us=108  bw=1242.76 GB/s
+[op_bench] tanh n=16777216  us=105.728  bw=1269.46 GB/s
+[op_bench] matmul n=128  us=35.648  tflops=0.117659
+[op_bench] matmul n=256  us=35.072  tflops=0.95673
+[op_bench] matmul n=512  us=86.496  tflops=3.10344
+[op_bench] matmul n=1024  us=484.864  tflops=4.42904
+[op_bench] matmul n=2048  us=3547.78  tflops=4.84243
+[op_bench] softmax rows=1 cols=1024  us=33.664  bw=0.243346 GB/s
+[op_bench] softmax rows=32 cols=1024  us=33.312  bw=7.86936 GB/s
+[op_bench] softmax rows=128 cols=1024  us=32.352  bw=32.4115 GB/s
+[op_bench] softmax rows=1024 cols=1024  us=31.936  bw=262.669 GB/s
+[op_bench] softmax rows=4096 cols=1024  us=36.288  bw=924.67 GB/s
+[op_bench] layernorm rows=1 cols=1024  us=34.176  bw=0.479401 GB/s
+[op_bench] layernorm rows=32 cols=1024  us=36.928  bw=7.32062 GB/s
+[op_bench] layernorm rows=128 cols=1024  us=35.36  bw=29.886 GB/s
+[op_bench] layernorm rows=1024 cols=1024  us=33.824  bw=248.25 GB/s
+[op_bench] Wrote /tmp/ncu_test2.json (4031 bytes, 39 entries)
+==PROF== Disconnected from process 84641
+==PROF== Creating report from application replay data: 0%.....................100%
+[84240] op_bench@127.0.0.1
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.43
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.43
+    gpu__time_duration.sum                                                    us         4.42
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.39
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        15.27
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        15.27
+    gpu__time_duration.sum                                                    us         4.13
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        22.61
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.66
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.66
+    gpu__time_duration.sum                                                    us         4.32
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.82
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.72
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.72
+    gpu__time_duration.sum                                                    us         4.29
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.90
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.77
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.77
+    gpu__time_duration.sum                                                    us         4.29
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.96
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.84
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.84
+    gpu__time_duration.sum                                                    us         4.22
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        22.10
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        15.07
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        15.07
+    gpu__time_duration.sum                                                    us         4.19
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        22.36
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.87
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.87
+    gpu__time_duration.sum                                                    us         4.26
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        22.01
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.43
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.43
+    gpu__time_duration.sum                                                    us         4.38
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.50
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.60
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.60
+    gpu__time_duration.sum                                                    us         4.32
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.73
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.08
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.08
+    gpu__time_duration.sum                                                    us         4.48
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        20.92
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.12
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.12
+    gpu__time_duration.sum                                                    us         4.48
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        20.98
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        13.97
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        13.97
+    gpu__time_duration.sum                                                    us         4.51
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        20.75
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.38
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.38
+    gpu__time_duration.sum                                                    us         4.45
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.14
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_add_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.42
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.42
+    gpu__time_duration.sum                                                    us         4.38
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.35
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.55
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.55
+    gpu__time_duration.sum                                                    us         4.35
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.61
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.76
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.76
+    gpu__time_duration.sum                                                    us         4.32
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.92
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.87
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.87
+    gpu__time_duration.sum                                                    us         4.26
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        22.16
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.38
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.38
+    gpu__time_duration.sum                                                    us         4.42
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.31
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.10
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.10
+    gpu__time_duration.sum                                                    us         4.48
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        20.95
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.11
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.11
+    gpu__time_duration.sum                                                    us         4.48
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        20.94
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        13.98
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        13.98
+    gpu__time_duration.sum                                                    us         4.51
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        20.78
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.87
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.87
+    gpu__time_duration.sum                                                    us         4.26
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        22.01
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.71
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.71
+    gpu__time_duration.sum                                                    us         4.32
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.84
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.39
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.39
+    gpu__time_duration.sum                                                    us         4.38
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.35
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.79
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.79
+    gpu__time_duration.sum                                                    us         4.26
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        22.00
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.19
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.19
+    gpu__time_duration.sum                                                    us         4.48
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.02
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        13.94
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        13.94
+    gpu__time_duration.sum                                                    us         4.54
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        20.67
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.23
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.23
+    gpu__time_duration.sum                                                    us         4.45
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.14
+    ---------------------------------------------------------------- ----------- ------------
+
+  void elementwise_mul_kernel<float>(const T1 *, const T1 *, T1 *, long) (1024, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 9.0
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------- ----------- ------------
+    Metric Name                                                      Metric Unit Metric Value
+    ---------------------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed                         %        14.22
+    gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed           %        14.22
+    gpu__time_duration.sum                                                    us         4.45
+    sm__throughput.avg.pct_of_peak_sustained_elapsed                           %        21.08
+    ---------------------------------------------------------------- ----------- ------------
+
