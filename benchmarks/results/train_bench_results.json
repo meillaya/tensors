@@ -1,0 +1,4 @@
+[
+  {"model": "mlp_mnist", "mode": "forward_only", "sec_per_epoch": 0.783899, "samples_per_sec": 1224.65},
+  {"model": "mlp_mnist", "mode": "forward_only", "batch_size": 64, "num_batches": 15, "samples": 960}
+]

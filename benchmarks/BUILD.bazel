@@ -1,14 +1,18 @@
-"""TensorForge — benchmarks/ Bazel build (Wave 5 / T25, T48).
+"""TensorForge — benchmarks/ Bazel build (Wave 5 / T25, T48, T49).
 
 GPU-side op-level benchmarks. Each is a `cc_binary` (NOT `cc_test`) that
 prints structured output and exits 0 — they are run via `bazelisk run`,
 not `bazelisk test`.
 
 Targets:
-  * gemm_bench (T25) — naive/tiled/optimized GEMM vs cuBLAS, FP32/FP16/BF16.
-  * op_bench   (T48) — full op-level harness: add, mul, relu, sigmoid,
+  * gemm_bench  (T25) — naive/tiled/optimized GEMM vs cuBLAS, FP32/FP16/BF16.
+  * op_bench    (T48) — full op-level harness: add, mul, relu, sigmoid,
     tanh, matmul, softmax, layernorm. Used for the
     benchmarks/results/op_bench_results.json report.
+  * train_bench (T49) — MLP-on-MNIST forward throughput benchmark.
+    CPU Float32 forward-only (Linear/ReLU/CEL are CPU in v1, and the
+    autograd requires_grad propagation bug blocks reliable backward
+    timing). Writes benchmarks/results/train_bench_results.json.
 """
 
 load("@rules_cc//cc:defs.bzl", "cc_binary")
@@ -57,4 +61,23 @@ cc_binary(
         "//tensor:tensor_types",
     ],
     tags = ["gpu", "bench"],
+)
+
+# Training throughput benchmark (T49). Times MLP-on-MNIST forward
+# through nn::Linear + nn::ReLU + nn::CrossEntropyLoss (CPU Float32).
+# Backward is intentionally omitted: the autograd requires_grad
+# propagation bug makes it unreliable to time in v1.
+cc_binary(
+    name = "train_bench",
+    srcs = ["train_bench.cpp"],
+    deps = [
+        "//data:mnist",
+        "//nn:cross_entropy_loss",
+        "//nn:activations",
+        "//nn:linear",
+        "//tensor:factory",
+        "//tensor:tensor_core",
+        "//tensor:tensor_types",
+    ],
+    tags = ["bench"],
 )
