@@ -1,10 +1,8 @@
-# TensorForge
-
-> **Built TensorForge**: a GPU-native tensor + autograd runtime from scratch in C++/CUDA — hand-written kernels (matmul, conv2d, softmax, layernorm, activations), reverse-mode autograd, NN modules, and an **MLP trained on MNIST reaching 97.21% test accuracy on H100**.
+# tensorforge
 
 A PyTorch-style tensor + autograd runtime, built in C++20/CUDA 12 from scratch across 58 atomic commits. Designed as a systems-level reference for ML systems / GPU runtime work.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+<!--[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)-->
 [![C++20](https://img.shields.io/badge/C++20-00599C?logo=c%2B%2B&logoColor=white)](https://en.cppreference.com/w/cpp/20)
 [![CUDA 12.6](https://img.shields.io/badge/CUDA-12.6-76B900?logo=nvidia&logoColor=white)](https://developer.nvidia.com/cuda-toolkit)
 [![Bazel 9.1.1](https://img.shields.io/badge/Bazel-9.1.1-43A047?logo=bazel&logoColor=white)](https://bazel.build/)
@@ -23,8 +21,6 @@ A PyTorch-style tensor + autograd runtime, built in C++20/CUDA 12 from scratch a
 | **Code volume** | 58 atomic commits · ~50 source files · 24/24 CPU tests pass · 0 known limitations |
 
 ## Status
-
-**v0.1.0 — All 14 waves complete (58/58 tasks done).** Hand-written CUDA kernels for add, mul, matmul (naive + tiled + vectorized-optimized), conv2d (im2col + tiled GEMM), relu/sigmoid/tanh/softmax/layernorm. Reverse-mode autograd engine with topological execution and dynamic graph. NN modules (Module, Linear, Conv2D, ReLU, CrossEntropyLoss). MNIST and CIFAR-10 data loaders. Elementwise kernel fusion via Python AST → .cu → nvcc codegen. PyTorch comparison benchmarks. ARCHITECTURE.md, DESIGN.md, BENCHMARKS.md with full Mermaid diagrams.
 
 MLP training on MNIST reaches **97.21%** in 5 epochs (target: >95%).
 
@@ -199,29 +195,7 @@ bazelisk run //examples:train_mlp 2>&1 | tee /tmp/train_mlp.log
 - **`devenv.nix`** provides reproducible local dev environment (CUDA 12.6, Bazelisk, clang_18, nsys/ncu, bear)
 - **CI**: GitHub Actions with `cpu-smoke.yml` (every push) + `gpu-tests.yml` (nightly via ephemeral PrimeIntellect H100 pods)
 
-## Documentation
-
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** — class hierarchy, kernel dispatch flow, autograd backward execution, allocator lifecycle (4 Mermaid diagrams)
-- **[DESIGN.md](DESIGN.md)** — 9 key design decisions: C++20 over C++23, cudaMallocAsync over custom allocator, im2col+GEMM over direct conv, linked Node autograd, single CUDA stream per backward, AST codegen for fusion, templated dtype dispatch, hand-rolled GEMM target, rules_cuda pin strategy
-- **[BENCHMARKS.md](BENCHMARKS.md)** — op-level + training throughput vs cuBLAS, Mermaid charts
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** — devenv setup, CPU/GPU testing, PrimeIntellect workflow, op/module contribution guides, conventional commits, PR process
-- **[docs/](docs/)** — architecture v1 diagram, CI cost model, autograd design notes, nsys/ncu profiling reports
-
-## Project Stats
-
-| Metric | Value |
-|---|---|
-| Atomic commits | 58 |
-| Source files | ~50 (C++ + CUDA + Python) |
-| CUDA kernels | 14 (elementwise, matmul×3, softmax, layernorm, im2col, col2im, bias_add, etc.) |
-| NN modules | 5 (Module, Linear, Conv2D, ReLU/Sigmoid/Tanh, CrossEntropyLoss) |
-| Backward nodes | 8 (Add, Mul, ReLU, Softmax, Matmul, Transpose, LogSoftmax, Sum) |
-| CPU tests | 24/24 pass |
-| Lines of code | ~5,000 (C++/CUDA) + ~500 (Python) |
-| Build time (cold) | ~2 min on first run, ~30s cached |
-| Test time (CPU lane) | ~30s for all 24 tests |
-
-## Acknowledgements
+## References
 
 - [PyTorch autograd](https://github.com/pytorch/pytorch/tree/main/torch/csrc/autograd) — design inspiration for Node/Edge/Engine
 - [Micrograd](https://github.com/karpathy/micrograd) — Karpathy's minimal scalar autograd
@@ -229,7 +203,3 @@ bazelisk run //examples:train_mlp 2>&1 | tee /tmp/train_mlp.log
 - [cuda-samples matrixMul](https://github.com/NVIDIA/cuda-samples) — tiled GEMM reference
 - [kokkos/mdspan](https://github.com/kokkos/mdspan) — multi-dimensional span reference (vendored as C++20 substitute for `std::mdspan`)
 - [PrimeIntellect](https://primeintellect.ai) — GPU rental infrastructure
-
-## License
-
-MIT — see [LICENSE](LICENSE).
