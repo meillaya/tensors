@@ -18,7 +18,6 @@ A PyTorch-style tensor + autograd runtime, built in C++20/CUDA 12 from scratch a
 | **Optimized matmul (N=2048, FP32)** | **6.05 TFLOPS** on H100 |
 | **Softmax throughput** | **1.80 TB/s** @ 4096×1024 |
 | **LayerNorm throughput** | **2.28 TB/s** @ 1024×1024 |
-| **Code volume** | 58 atomic commits · ~50 source files · 24/24 CPU tests pass · 0 known limitations |
 
 ## Status
 
