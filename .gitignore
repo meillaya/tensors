@@ -46,3 +46,4 @@ public_key.pem
 # Profiling artifacts (rebuilt by scripts in docs/profiling/README.md)
 *.nsys-rep
 *.ncu-rep
+.devenv/
